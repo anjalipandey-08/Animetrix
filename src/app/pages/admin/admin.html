@@ -1,0 +1,462 @@
+<!-- ADMIN HEADER -->
+<section class="admin-header">
+  <div>
+    <span class="eyebrow">
+      ⚙️ ADMIN DASHBOARD
+    </span>
+
+    <h1>
+      Animetrix Control Center
+    </h1>
+
+    <p>
+      Monitor real reports, observations and platform activity.
+    </p>
+  </div>
+</section>
+
+
+<!-- STATISTICS -->
+<section class="admin-stats">
+
+  <div class="admin-stat">
+    <span>📝</span>
+
+    <div>
+      <strong>{{ totalReports }}</strong>
+      <p>Total Reports</p>
+    </div>
+  </div>
+
+
+  <div class="admin-stat">
+    <span>📍</span>
+
+    <div>
+      <strong>{{ totalObservations }}</strong>
+      <p>Observations</p>
+    </div>
+  </div>
+
+
+  <div class="admin-stat">
+    <span>📋</span>
+
+    <div>
+      <strong>{{ totalResponses }}</strong>
+      <p>Survey Responses</p>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- MAIN CONTENT -->
+<section class="admin-content">
+
+
+  <!-- REPORT MANAGEMENT -->
+  <div class="admin-panel report-panel">
+
+    <div class="panel-heading">
+
+      <div>
+        <span class="section-label">
+          REPORT MANAGEMENT
+        </span>
+
+        <h2>
+          Recent Reports
+        </h2>
+      </div>
+
+      <a routerLink="/report">
+        View Report Form →
+      </a>
+
+    </div>
+
+
+    <!-- SEARCH -->
+    @if (!loading && recentReports.length > 0) {
+
+      <div class="admin-search">
+
+        <span>🔎</span>
+
+        <input
+          type="text"
+          placeholder="Search by animal, area or description..."
+          [value]="searchTerm"
+          (input)="searchReports($event)"
+        >
+
+      </div>
+
+    }
+
+
+    <!-- LOADING -->
+    @if (loading) {
+
+      <div class="admin-state">
+
+        <div class="loading-spinner"></div>
+
+        <h3>
+          Loading reports...
+        </h3>
+
+        <p>
+          Fetching the latest information
+          from the Animetrix database.
+        </p>
+
+      </div>
+
+    }
+
+
+    <!-- ERROR -->
+    @if (!loading && errorMessage) {
+
+      <div class="admin-state error-state">
+
+        <div class="state-icon">
+          ⚠️
+        </div>
+
+        <h3>
+          Unable to load reports
+        </h3>
+
+        <p>
+          {{ errorMessage }}
+        </p>
+
+      </div>
+
+    }
+
+
+    <!-- EMPTY -->
+    @if (
+      !loading &&
+      !errorMessage &&
+      recentReports.length === 0
+    ) {
+
+      <div class="empty-admin">
+
+        <div class="empty-icon">
+          📂
+        </div>
+
+        <h3>
+          No reports available
+        </h3>
+
+        <p>
+          Once a real observation is submitted,
+          it will appear here for administrative review.
+        </p>
+
+        <a
+          routerLink="/report"
+          class="primary-btn"
+        >
+          Submit a Report →
+        </a>
+
+      </div>
+
+    }
+
+
+    <!-- SEARCH NO RESULTS -->
+    @if (
+      !loading &&
+      !errorMessage &&
+      recentReports.length > 0 &&
+      filteredReports.length === 0
+    ) {
+
+      <div class="admin-state">
+
+        <div class="state-icon">
+          🔎
+        </div>
+
+        <h3>
+          No matching reports
+        </h3>
+
+        <p>
+          No report matches "{{ searchTerm }}".
+        </p>
+
+      </div>
+
+    }
+
+
+    <!-- REAL REPORTS -->
+    @if (
+      !loading &&
+      !errorMessage &&
+      filteredReports.length > 0
+    ) {
+
+      <div class="reports-list">
+
+        @for (
+          report of filteredReports;
+          track report.id
+        ) {
+
+          <article class="report-item">
+
+
+            <!-- PHOTO -->
+            @if (report.photo_url) {
+
+              <div class="report-image">
+
+                <img
+                  [src]="report.photo_url"
+                  alt="Submitted animal observation"
+                >
+
+              </div>
+
+            }
+
+
+            <!-- REPORT DETAILS -->
+            <div class="report-details">
+
+
+              <div class="report-top">
+
+                <span class="animal-badge">
+                  🐾 {{ report.animal_type }}
+                </span>
+
+                <span class="report-date">
+                  {{ report.created_at | date:'dd MMM yyyy' }}
+                </span>
+
+              </div>
+
+
+              <h3>
+                {{ report.animal_type }} Observation
+              </h3>
+
+
+              @if (report.area) {
+
+                <div class="report-location">
+                  📍 {{ report.area }}
+                </div>
+
+              }
+
+
+              @if (report.description) {
+
+                <p class="report-description">
+                  {{ report.description }}
+                </p>
+
+              }
+
+
+              <div class="report-info">
+
+                @if (report.name) {
+
+                  <span>
+                    👤 {{ report.name }}
+                  </span>
+
+                }
+
+
+                @if (report.injured) {
+
+                  <span>
+                    🩹 Injured: {{ report.injured }}
+                  </span>
+
+                }
+
+
+                @if (report.urgent_help) {
+
+                  <span>
+                    🚨 Help: {{ report.urgent_help }}
+                  </span>
+
+                }
+
+              </div>
+
+            </div>
+
+          </article>
+
+        }
+
+      </div>
+
+    }
+
+  </div>
+
+
+
+  <!-- SYSTEM STATUS -->
+  <div class="admin-panel">
+
+    <div class="panel-heading">
+
+      <div>
+
+        <span class="section-label">
+          SYSTEM STATUS
+        </span>
+
+        <h2>
+          Platform Overview
+        </h2>
+
+      </div>
+
+    </div>
+
+
+    <div class="system-row">
+
+      <span>
+        Frontend
+      </span>
+
+      <strong class="active">
+        ● Active
+      </strong>
+
+    </div>
+
+
+    <div class="system-row">
+
+      <span>
+        Survey
+      </span>
+
+      <strong class="active">
+        ● Connected
+      </strong>
+
+    </div>
+
+
+    <div class="system-row">
+
+      <span>
+        Database
+      </span>
+
+
+      @if (loading) {
+
+        <strong class="pending">
+          ● Checking...
+        </strong>
+
+      }
+
+      @else if (errorMessage) {
+
+        <strong class="error">
+          ● Error
+        </strong>
+
+      }
+
+      @else if (totalReports > 0) {
+
+        <strong class="active">
+          ● Connected
+        </strong>
+
+      }
+
+      @else {
+
+        <strong class="pending">
+          ● Connected · No Data
+        </strong>
+
+      }
+
+    </div>
+
+
+    <div class="system-row">
+
+      <span>
+        Analytics
+      </span>
+
+
+      @if (totalReports > 0) {
+
+        <strong class="active">
+          ● Active
+        </strong>
+
+      }
+
+      @else {
+
+        <strong class="pending">
+          ● Awaiting Data
+        </strong>
+
+      }
+
+    </div>
+
+
+    <div class="system-row">
+
+      <span>
+        Reports
+      </span>
+
+      <strong class="active">
+        ● Live
+      </strong>
+
+    </div>
+
+
+    <div class="system-note">
+
+      <span>
+        ℹ️
+      </span>
+
+      <p>
+        Dashboard information is generated from
+        real Animetrix data. No statistics are
+        manually invented.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>

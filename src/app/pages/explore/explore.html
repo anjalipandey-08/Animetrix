@@ -1,0 +1,405 @@
+<section class="explore-hero">
+
+  <div class="hero-text">
+
+    <span class="eyebrow">
+      🔎 EXPLORE ANIMETRIX
+    </span>
+
+    <h1>
+      Discover the world<br>
+      around every paw.
+    </h1>
+
+    <p>
+      Explore urban animal observations, animal-friendly infrastructure
+      and community experiences collected through Animetrix.
+    </p>
+
+    <div class="hero-buttons">
+
+      <a
+        routerLink="/report"
+        class="primary-btn"
+      >
+        Report an Observation →
+      </a>
+
+      <a
+        routerLink="/survey"
+        class="outline-btn"
+      >
+        Take the Survey
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <div class="hero-image">
+
+    <img
+      src="images/urbancat.jpg"
+      alt="Cat in an urban environment"
+    >
+
+  </div>
+
+</section>
+
+
+<section class="explore-section">
+
+  <div class="section-top">
+
+    <div>
+
+      <span class="section-label">
+        EXPLORE
+      </span>
+
+      <h2>
+        What would you like to discover?
+      </h2>
+
+      <p>
+        Browse different aspects of urban animal welfare.
+      </p>
+
+    </div>
+
+
+    <div class="search-box">
+
+      🔍
+
+      <input
+        type="text"
+        placeholder="Search observations..."
+        [value]="searchTerm"
+        (input)="searchObservations($event)"
+      >
+
+    </div>
+
+  </div>
+
+
+  <div class="category-grid">
+
+    @for (
+      category of categories;
+      track category.title
+    ) {
+
+      <article class="category-card">
+
+        <div class="card-image">
+
+          <img
+            [src]="category.image"
+            [alt]="category.title"
+          >
+
+        </div>
+
+
+        <div class="card-content">
+
+          <h3>
+            {{ category.title }}
+          </h3>
+
+          <p>
+            {{ category.text }}
+          </p>
+
+          <a
+            [routerLink]="category.link"
+          >
+            Explore →
+          </a>
+
+        </div>
+
+      </article>
+
+    }
+
+  </div>
+
+</section>
+
+
+<section class="explore-feature">
+
+  <div class="feature-image">
+
+    <img
+      src="images/urbaninfrastrucure.jpg"
+      alt="Animal-friendly urban infrastructure"
+    >
+
+  </div>
+
+
+  <div class="feature-content">
+
+    <span class="section-label">
+      WHY IT MATTERS
+    </span>
+
+    <h2>
+      Better cities should work for every living being.
+    </h2>
+
+    <p>
+      Urban development can affect animals in many ways.
+      Access to water, food, shelter and safe spaces can make
+      a significant difference to animals living alongside us.
+    </p>
+
+    <p>
+      Animetrix helps document these observations and understand
+      where improvements may be needed.
+    </p>
+
+    <a
+      routerLink="/about"
+      class="primary-btn"
+    >
+      Learn More →
+    </a>
+
+  </div>
+
+</section>
+
+
+<section
+  class="recent-observations"
+  id="recent-observations"
+>
+
+  <div class="section-top observation-heading">
+
+    <div>
+
+      <span class="section-label">
+        RECENT OBSERVATIONS
+      </span>
+
+      <h2>
+        What the community has shared.
+      </h2>
+
+      <p>
+        Real observations submitted through the Animetrix
+        reporting system.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- LOADING -->
+
+  @if (loading) {
+
+    <div class="explore-state">
+
+      <div class="loading-spinner"></div>
+
+      <h3>
+        Loading observations...
+      </h3>
+
+      <p>
+        Fetching the latest community reports.
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- ERROR -->
+
+  @if (
+    !loading &&
+    errorMessage
+  ) {
+
+    <div class="explore-state error-state">
+
+      <div class="state-icon">
+        ⚠️
+      </div>
+
+      <h3>
+        Unable to load observations
+      </h3>
+
+      <p>
+        {{ errorMessage }}
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- NO REPORTS -->
+
+  @if (
+    !loading &&
+    !errorMessage &&
+    reports.length === 0
+  ) {
+
+    <div class="explore-state">
+
+      <div class="state-icon">
+        🐾
+      </div>
+
+      <h3>
+        No observations yet
+      </h3>
+
+      <p>
+        There are no community observations available yet.
+        Be the first to contribute to Animetrix.
+      </p>
+
+      <a
+        routerLink="/report"
+        class="primary-btn"
+      >
+        Share an Observation →
+      </a>
+
+    </div>
+
+  }
+
+
+  <!-- SEARCH NO RESULTS -->
+
+  @if (
+    !loading &&
+    !errorMessage &&
+    reports.length > 0 &&
+    filteredReports.length === 0
+  ) {
+
+    <div class="explore-state">
+
+      <div class="state-icon">
+        🔎
+      </div>
+
+      <h3>
+        No matching observations
+      </h3>
+
+      <p>
+        We couldn't find an observation matching
+        "{{ searchTerm }}".
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- REAL OBSERVATIONS -->
+
+  @if (
+    !loading &&
+    !errorMessage &&
+    filteredReports.length > 0
+  ) {
+
+    <div class="explore-observation-grid">
+
+      @for (
+        report of filteredReports;
+        track report.id
+      ) {
+
+        <article class="explore-observation-card">
+
+
+          <!-- PHOTO -->
+
+          @if (report.photo_url) {
+
+            <div class="explore-observation-image">
+
+              <img
+                [src]="report.photo_url"
+                alt="Animal observation"
+              >
+
+            </div>
+
+          }
+
+
+          <!-- CONTENT -->
+
+          <div class="explore-observation-content">
+
+            <div class="observation-meta">
+
+              <span class="animal-badge">
+                🐾 {{ report.animal_type }}
+              </span>
+
+
+              @if (report.area) {
+
+                <span class="location">
+                  📍 {{ report.area }}
+                </span>
+
+              }
+
+            </div>
+
+
+            <h3>
+              {{ report.animal_type }} observation
+            </h3>
+
+
+            @if (report.description) {
+
+              <p>
+                {{ report.description }}
+              </p>
+
+            }
+
+
+            <a
+              routerLink="/community"
+              class="observation-link"
+            >
+              View Community →
+            </a>
+
+          </div>
+
+        </article>
+
+      }
+
+    </div>
+
+  }
+
+</section>

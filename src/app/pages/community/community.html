@@ -1,0 +1,427 @@
+<section class="community-hero">
+
+  <div class="community-text">
+
+    <span class="eyebrow">
+      🐾 ANIMETRIX COMMUNITY
+    </span>
+
+    <h1>
+      Small actions.<br>
+      Big difference.
+    </h1>
+
+    <p>
+      Animal welfare is not just about infrastructure.
+      It is also about the people who notice, care and act.
+    </p>
+
+    <a
+      routerLink="/report"
+      class="primary-btn"
+    >
+      Share an Observation →
+    </a>
+
+  </div>
+
+
+  <img
+    src="images/communityhelping.jpg"
+    alt="Community helping animals"
+  >
+
+</section>
+
+
+
+<section class="community-content">
+
+  <div class="center-heading">
+
+    <span class="section-label">
+      COMMUNITY
+    </span>
+
+    <h2>
+      Everyone can make a difference.
+    </h2>
+
+    <p>
+      Whether you report an animal, participate in our survey,
+      or simply become more aware of your surroundings,
+      your contribution matters.
+    </p>
+
+  </div>
+
+
+
+  <div class="community-grid">
+
+    <article class="community-card">
+
+      <div class="icon">
+        📍
+      </div>
+
+      <h3>
+        Observe
+      </h3>
+
+      <p>
+        Notice animals and the conditions around them in your
+        everyday environment.
+      </p>
+
+    </article>
+
+
+
+    <article class="community-card">
+
+      <div class="icon">
+        📝
+      </div>
+
+      <h3>
+        Report
+      </h3>
+
+      <p>
+        Share accurate observations so potential problems
+        can be documented.
+      </p>
+
+    </article>
+
+
+
+    <article class="community-card">
+
+      <div class="icon">
+        💡
+      </div>
+
+      <h3>
+        Understand
+      </h3>
+
+      <p>
+        Use collected information to understand patterns
+        in urban animal welfare.
+      </p>
+
+    </article>
+
+
+
+    <article class="community-card">
+
+      <div class="icon">
+        🤝
+      </div>
+
+      <h3>
+        Participate
+      </h3>
+
+      <p>
+        Take part in the survey and help make this academic
+        project more meaningful.
+      </p>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+
+<!-- ================================= -->
+<!-- REAL COMMUNITY OBSERVATIONS -->
+<!-- ================================= -->
+
+<section class="community-observations">
+
+  <div class="center-heading">
+
+    <span class="section-label">
+      REAL OBSERVATIONS
+    </span>
+
+    <h2>
+      What our community has observed.
+    </h2>
+
+    <p>
+      These observations are submitted by users through
+      the Animetrix reporting system.
+    </p>
+
+  </div>
+
+
+
+  <!-- LOADING -->
+
+  @if (loading) {
+
+    <div class="observations-state">
+
+      <div class="loading-spinner"></div>
+
+      <h3>
+        Loading observations...
+      </h3>
+
+      <p>
+        Please wait while we fetch the latest reports.
+      </p>
+
+    </div>
+
+  }
+
+
+
+  <!-- ERROR -->
+
+  @if (!loading && errorMessage) {
+
+    <div class="observations-state error-state">
+
+      <div class="state-icon">
+        ⚠️
+      </div>
+
+      <h3>
+        Unable to load observations
+      </h3>
+
+      <p>
+        {{ errorMessage }}
+      </p>
+
+    </div>
+
+  }
+
+
+
+  <!-- NO REPORTS -->
+
+  @if (!loading && !errorMessage && reports.length === 0) {
+
+    <div class="observations-state">
+
+      <div class="state-icon">
+        🐾
+      </div>
+
+      <h3>
+        No observations yet
+      </h3>
+
+      <p>
+        Be the first person to share an animal observation
+        with the Animetrix community.
+      </p>
+
+      <a
+        routerLink="/report"
+        class="primary-btn"
+      >
+        Share an Observation →
+      </a>
+
+    </div>
+
+  }
+
+
+
+  <!-- REAL REPORTS -->
+
+  @if (!loading && !errorMessage && reports.length > 0) {
+
+    <div class="observations-list">
+
+      @for (report of reports; track report.id) {
+
+        <article class="observation-card">
+
+
+          <!-- PHOTO -->
+
+          @if (report.photo_url) {
+
+            <div class="observation-image">
+
+              <img
+                [src]="report.photo_url"
+                alt="Animal observation"
+              >
+
+            </div>
+
+          }
+
+
+          <div class="observation-body">
+
+            <div class="observation-top">
+
+              <span class="animal-badge">
+                🐾 {{ report.animal_type }}
+              </span>
+
+              @if (report.created_at) {
+
+                <span class="observation-date">
+
+                  {{ report.created_at | date:'dd MMM yyyy' }}
+
+                </span>
+
+              }
+
+            </div>
+
+
+
+            <h3>
+              {{ report.animal_type }} observation
+            </h3>
+
+
+
+            @if (report.area) {
+
+              <p class="observation-location">
+                📍 {{ report.area }}
+              </p>
+
+            }
+
+
+
+            @if (report.description) {
+
+              <p class="observation-description">
+                {{ report.description }}
+              </p>
+
+            }
+
+
+
+            <div class="observation-details">
+
+              @if (report.condition) {
+
+                <span>
+                  Condition: {{ report.condition }}
+                </span>
+
+              }
+
+
+              @if (report.behaviour) {
+
+                <span>
+                  Behaviour: {{ report.behaviour }}
+                </span>
+
+              }
+
+
+              @if (report.water) {
+
+                <span>
+                  Water: {{ report.water }}
+                </span>
+
+              }
+
+
+              @if (report.shelter) {
+
+                <span>
+                  Shelter: {{ report.shelter }}
+                </span>
+
+              }
+
+            </div>
+
+          </div>
+
+        </article>
+
+      }
+
+    </div>
+
+  }
+
+</section>
+
+
+
+<!-- ================================= -->
+<!-- COMMUNITY MESSAGE -->
+<!-- ================================= -->
+
+<section class="community-image-section">
+
+  <div class="image-card">
+
+    <img
+      src="images/streetdog.jpg"
+      alt="Street animal observation"
+    >
+
+  </div>
+
+
+  <div class="community-message">
+
+    <span class="section-label">
+      YOUR VOICE MATTERS
+    </span>
+
+    <h2>
+      One observation can become useful information.
+    </h2>
+
+    <p>
+      Animetrix is designed to bring observations, community
+      participation and urban infrastructure assessment together
+      in one platform.
+    </p>
+
+
+    <div class="buttons">
+
+      <a
+        routerLink="/survey"
+        class="primary-btn"
+      >
+        Take Survey
+      </a>
+
+
+      <a
+        routerLink="/explore"
+        class="outline-btn"
+      >
+        Explore Animetrix
+      </a>
+
+    </div>
+
+  </div>
+
+</section>

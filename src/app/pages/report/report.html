@@ -1,0 +1,1054 @@
+<section class="report-hero">
+
+  <div class="hero-content">
+    <span class="eyebrow">🐾 ANIMAL OBSERVATION</span>
+
+    <h1>Report an Animal</h1>
+
+    <p>
+      Help us understand animal-related situations in urban areas.
+      Your observation can help identify problems and improve
+      animal-friendly infrastructure.
+    </p>
+  </div>
+
+  <img
+    src="images/streetdog.jpg"
+    alt="Street dog in an urban area"
+  />
+
+</section>
+
+
+@if (submitted) {
+
+  <section class="success-box">
+
+    <div class="success-icon">✓</div>
+
+    <div>
+      <h2>Report Submitted Successfully!</h2>
+
+      <p>
+        Thank you for sharing your observation.
+        Your information has been recorded for further analysis.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="secondary-btn"
+      (click)="resetForm()"
+    >
+      Submit Another Report
+    </button>
+
+  </section>
+
+}
+
+
+<section class="report-wrapper">
+
+  <div class="form-intro">
+
+    <div>
+      <span class="section-label">OBSERVATION FORM</span>
+
+      <h2>Tell us what you observed</h2>
+
+      <p>
+        Please provide the information you know.
+        Fields marked with <strong>*</strong> are required.
+      </p>
+    </div>
+
+    <div class="privacy-note">
+      🔒 Your information is used only for project and
+      observation purposes.
+    </div>
+
+  </div>
+
+
+  <form
+    class="report-form"
+    #reportForm="ngForm"
+    (ngSubmit)="submitReport()"
+  >
+
+    @if (errorMessage) {
+
+      <div class="form-error">
+        {{ errorMessage }}
+      </div>
+
+    }
+
+
+    <!-- ========================= -->
+    <!-- 01 REPORTER INFORMATION -->
+    <!-- ========================= -->
+
+    <div class="form-section">
+
+      <div class="section-heading">
+
+        <span>01</span>
+
+        <div>
+          <h3>Reporter Information</h3>
+
+          <p>
+            Basic details about the person submitting this observation.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="form-grid">
+
+        <!-- NAME - REQUIRED -->
+
+        <div class="form-group">
+
+          <label>
+            Your Name <span>*</span>
+          </label>
+
+          <input
+            type="text"
+            name="name"
+            [(ngModel)]="report.name"
+            required
+            placeholder="Enter your name"
+          />
+
+        </div>
+
+
+        <!-- EMAIL - REQUIRED -->
+
+        <div class="form-group">
+
+          <label>
+            Email Address <span>*</span>
+          </label>
+
+          <input
+            type="email"
+            name="email"
+            [(ngModel)]="report.email"
+            required
+            placeholder="example@email.com"
+          />
+
+        </div>
+
+
+        <!-- PHONE - OPTIONAL -->
+
+        <div class="form-group">
+
+          <label>
+            Phone Number
+          </label>
+
+          <input
+            type="tel"
+            name="phone"
+            [(ngModel)]="report.phone"
+            placeholder="Optional"
+          />
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- 02 ANIMAL DETAILS -->
+    <!-- ========================= -->
+
+    <div class="form-section">
+
+      <div class="section-heading">
+
+        <span>02</span>
+
+        <div>
+          <h3>Animal Details</h3>
+
+          <p>
+            Tell us about the animal or animals you observed.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="form-grid">
+
+
+        <!-- ANIMAL TYPE - REQUIRED -->
+
+        <div class="form-group">
+
+          <label>
+            Animal Type <span>*</span>
+          </label>
+
+          <select
+            name="animalType"
+            [(ngModel)]="report.animalType"
+            required
+          >
+
+            <option value="">
+              Select animal type
+            </option>
+
+            <option value="Dog">Dog</option>
+
+            <option value="Cat">Cat</option>
+
+            <option value="Bird">Bird</option>
+
+            <option value="Cow">Cow</option>
+
+            <option value="Other">Other</option>
+
+          </select>
+
+        </div>
+
+
+        <!-- NUMBER OF ANIMALS - OPTIONAL -->
+
+        <div class="form-group">
+
+          <label>
+            Number of Animals
+          </label>
+
+          <input
+            type="number"
+            name="animalCount"
+            [(ngModel)]="report.animalCount"
+            min="1"
+            placeholder="Optional"
+          />
+
+        </div>
+
+
+        <!-- CONDITION - OPTIONAL -->
+
+        <div class="form-group">
+
+          <label>
+            Physical Condition
+          </label>
+
+          <select
+            name="condition"
+            [(ngModel)]="report.condition"
+          >
+
+            <option value="">
+              Select condition
+            </option>
+
+            <option value="Healthy">
+              Healthy
+            </option>
+
+            <option value="Weak">
+              Weak
+            </option>
+
+            <option value="Injured">
+              Injured
+            </option>
+
+            <option value="Ill">
+              Ill / Sick
+            </option>
+
+            <option value="Unknown">
+              Unable to determine
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- BEHAVIOUR - OPTIONAL -->
+
+        <div class="form-group">
+
+          <label>
+            Behaviour
+          </label>
+
+          <select
+            name="behaviour"
+            [(ngModel)]="report.behaviour"
+          >
+
+            <option value="">
+              Select behaviour
+            </option>
+
+            <option value="Calm">
+              Calm
+            </option>
+
+            <option value="Aggressive">
+              Aggressive
+            </option>
+
+            <option value="Scared">
+              Scared / Avoiding people
+            </option>
+
+            <option value="Distressed">
+              Distressed
+            </option>
+
+            <option value="Normal">
+              Normal
+            </option>
+
+            <option value="Unknown">
+              Unknown
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- INJURED - OPTIONAL -->
+
+        <div class="form-group">
+
+          <label>
+            Does the animal appear injured?
+          </label>
+
+          <div class="radio-row">
+
+            <label class="radio-option">
+
+              <input
+                type="radio"
+                name="injured"
+                value="Yes"
+                [(ngModel)]="report.injured"
+              />
+
+              Yes
+
+            </label>
+
+
+            <label class="radio-option">
+
+              <input
+                type="radio"
+                name="injured"
+                value="No"
+                [(ngModel)]="report.injured"
+              />
+
+              No
+
+            </label>
+
+
+            <label class="radio-option">
+
+              <input
+                type="radio"
+                name="injured"
+                value="Unknown"
+                [(ngModel)]="report.injured"
+              />
+
+              Unknown
+
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <!-- URGENT HELP - OPTIONAL -->
+
+        <div class="form-group">
+
+          <label>
+            Immediate Help Required?
+          </label>
+
+          <div class="radio-row">
+
+            <label class="radio-option">
+
+              <input
+                type="radio"
+                name="urgentHelp"
+                value="Yes"
+                [(ngModel)]="report.urgentHelp"
+              />
+
+              Yes
+
+            </label>
+
+
+            <label class="radio-option">
+
+              <input
+                type="radio"
+                name="urgentHelp"
+                value="No"
+                [(ngModel)]="report.urgentHelp"
+              />
+
+              No
+
+            </label>
+
+
+            <label class="radio-option">
+
+              <input
+                type="radio"
+                name="urgentHelp"
+                value="Unknown"
+                [(ngModel)]="report.urgentHelp"
+              />
+
+              Unsure
+
+            </label>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- 03 LOCATION -->
+    <!-- ========================= -->
+
+    <div class="form-section">
+
+      <div class="section-heading">
+
+        <span>03</span>
+
+        <div>
+          <h3>Location Details</h3>
+
+          <p>
+            Help us understand where the observation happened.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="form-grid">
+
+
+        <!-- AREA - REQUIRED -->
+
+        <div class="form-group">
+
+          <label>
+            Area / Locality <span>*</span>
+          </label>
+
+          <input
+            type="text"
+            name="area"
+            [(ngModel)]="report.area"
+            required
+            placeholder="e.g. Ghatkopar"
+          />
+
+        </div>
+
+
+        <!-- EXACT LOCATION - OPTIONAL -->
+
+        <div class="form-group">
+
+          <label>
+            Exact Location
+          </label>
+
+          <input
+            type="text"
+            name="exactLocation"
+            [(ngModel)]="report.exactLocation"
+            placeholder="Street, park, building, etc."
+          />
+
+        </div>
+
+
+        <!-- LANDMARK - OPTIONAL -->
+
+        <div class="form-group">
+
+          <label>
+            Nearby Landmark
+          </label>
+
+          <input
+            type="text"
+            name="landmark"
+            [(ngModel)]="report.landmark"
+            placeholder="Nearby landmark"
+          />
+
+        </div>
+
+
+        <!-- COORDINATES - OPTIONAL -->
+
+        <div class="form-group">
+
+          <label>
+            Coordinates
+          </label>
+
+          <input
+            type="text"
+            name="coordinates"
+            [(ngModel)]="report.coordinates"
+            placeholder="Latitude, Longitude (optional)"
+          />
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- 04 OBSERVATION -->
+    <!-- ========================= -->
+
+    <div class="form-section">
+
+      <div class="section-heading">
+
+        <span>04</span>
+
+        <div>
+          <h3>Observation Details</h3>
+
+          <p>
+            Describe what you noticed.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="form-grid">
+
+
+        <!-- DATE - OPTIONAL -->
+
+        <div class="form-group">
+
+          <label>
+            Observation Date
+          </label>
+
+          <input
+            type="date"
+            name="observationDate"
+            [(ngModel)]="report.observationDate"
+          />
+
+        </div>
+
+
+        <!-- TIME - OPTIONAL -->
+
+        <div class="form-group">
+
+          <label>
+            Approximate Time
+          </label>
+
+          <input
+            type="time"
+            name="observationTime"
+            [(ngModel)]="report.observationTime"
+          />
+
+        </div>
+
+
+        <!-- DESCRIPTION - REQUIRED -->
+
+        <div class="form-group full-width">
+
+          <label>
+            What did you observe? <span>*</span>
+          </label>
+
+          <textarea
+            name="description"
+            [(ngModel)]="report.description"
+            required
+            rows="5"
+            placeholder="Describe the situation, animal behaviour, surrounding conditions, or any problem you noticed..."
+          ></textarea>
+
+        </div>
+
+
+        <!-- RECURRING - OPTIONAL -->
+
+        <div class="form-group">
+
+          <label>
+            Is this a recurring issue?
+          </label>
+
+          <select
+            name="recurring"
+            [(ngModel)]="report.recurring"
+          >
+
+            <option value="">
+              Select
+            </option>
+
+            <option value="Yes">
+              Yes
+            </option>
+
+            <option value="No">
+              No
+            </option>
+
+            <option value="Not sure">
+              Not sure
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- 05 INFRASTRUCTURE -->
+    <!-- ========================= -->
+
+    <div class="form-section">
+
+      <div class="section-heading">
+
+        <span>05</span>
+
+        <div>
+
+          <h3>
+            Animal-Friendly Infrastructure
+          </h3>
+
+          <p>
+            Tell us about facilities and environmental
+            conditions nearby.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="infrastructure-grid">
+
+
+        <!-- WATER -->
+
+        <div class="infra-card">
+
+          <div class="infra-icon">💧</div>
+
+          <h4>
+            Water Availability
+          </h4>
+
+          <select
+            name="water"
+            [(ngModel)]="report.water"
+          >
+
+            <option value="">
+              Select
+            </option>
+
+            <option value="Available">
+              Available
+            </option>
+
+            <option value="Not available">
+              Not available
+            </option>
+
+            <option value="Limited">
+              Limited
+            </option>
+
+            <option value="Unknown">
+              Unknown
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- FOOD -->
+
+        <div class="infra-card">
+
+          <div class="infra-icon">🍚</div>
+
+          <h4>
+            Food Availability
+          </h4>
+
+          <select
+            name="food"
+            [(ngModel)]="report.food"
+          >
+
+            <option value="">
+              Select
+            </option>
+
+            <option value="Available">
+              Available
+            </option>
+
+            <option value="Not available">
+              Not available
+            </option>
+
+            <option value="Limited">
+              Limited
+            </option>
+
+            <option value="Unknown">
+              Unknown
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- SHELTER -->
+
+        <div class="infra-card">
+
+          <div class="infra-icon">🏠</div>
+
+          <h4>
+            Shelter
+          </h4>
+
+          <select
+            name="shelter"
+            [(ngModel)]="report.shelter"
+          >
+
+            <option value="">
+              Select
+            </option>
+
+            <option value="Available">
+              Available
+            </option>
+
+            <option value="Not available">
+              Not available
+            </option>
+
+            <option value="Limited">
+              Limited
+            </option>
+
+            <option value="Unknown">
+              Unknown
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- TRAFFIC -->
+
+        <div class="infra-card">
+
+          <div class="infra-icon">🚗</div>
+
+          <h4>
+            Traffic / Safety Concern
+          </h4>
+
+          <select
+            name="traffic"
+            [(ngModel)]="report.traffic"
+          >
+
+            <option value="">
+              Select
+            </option>
+
+            <option value="High">
+              High
+            </option>
+
+            <option value="Medium">
+              Medium
+            </option>
+
+            <option value="Low">
+              Low
+            </option>
+
+            <option value="None">
+              None
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- WASTE -->
+
+        <div class="infra-card">
+
+          <div class="infra-icon">🗑️</div>
+
+          <h4>
+            Waste / Garbage
+          </h4>
+
+          <select
+            name="waste"
+            [(ngModel)]="report.waste"
+          >
+
+            <option value="">
+              Select
+            </option>
+
+            <option value="Major issue">
+              Major issue
+            </option>
+
+            <option value="Some waste">
+              Some waste
+            </option>
+
+            <option value="Clean">
+              Clean
+            </option>
+
+            <option value="Unknown">
+              Unknown
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- FACILITY -->
+
+        <div class="infra-card">
+
+          <div class="infra-icon">🐾</div>
+
+          <h4>
+            Animal-Friendly Facility
+          </h4>
+
+          <select
+            name="infrastructure"
+            [(ngModel)]="report.infrastructure"
+          >
+
+            <option value="">
+              Select
+            </option>
+
+            <option value="Present">
+              Present
+            </option>
+
+            <option value="Not present">
+              Not present
+            </option>
+
+            <option value="Needs improvement">
+              Needs improvement
+            </option>
+
+            <option value="Unknown">
+              Unknown
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- 06 EVIDENCE -->
+    <!-- ========================= -->
+
+    <div class="form-section">
+
+      <div class="section-heading">
+
+        <span>06</span>
+
+        <div>
+
+          <h3>
+            Evidence & Additional Information
+          </h3>
+
+          <p>
+            Add a photo or any additional information
+            that may help.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- PHOTO -->
+
+      <div class="form-group">
+
+        <label>
+          Upload Observation Photo
+        </label>
+
+        <div class="upload-box">
+
+          <div class="upload-icon">📷</div>
+
+          <strong>
+            Choose a photo
+          </strong>
+
+          <p>
+            JPG, PNG or JPEG files
+          </p>
+
+          <input
+            type="file"
+            accept="image/png,image/jpeg,image/jpg"
+            (change)="onFileSelected($event)"
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- NOTES -->
+
+      <div class="form-group">
+
+        <label>
+          Additional Notes
+        </label>
+
+        <textarea
+          name="additionalNotes"
+          [(ngModel)]="report.additionalNotes"
+          rows="4"
+          placeholder="Anything else you would like to mention..."
+        ></textarea>
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- SUBMIT -->
+    <!-- ========================= -->
+
+    <div class="submit-area">
+
+      <div class="submit-info">
+
+        <span>🐾</span>
+
+        <p>
+          Every observation helps build a better understanding
+          of urban animal welfare.
+        </p>
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="submit-btn"
+        [disabled]="!reportForm.valid || submitting"
+      >
+
+        {{ submitting ? 'Submitting...' : 'Submit Report' }}
+
+        @if (!submitting) {
+          <span>→</span>
+        }
+
+      </button>
+
+    </div>
+
+  </form>
+
+</section>

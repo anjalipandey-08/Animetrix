@@ -1,0 +1,639 @@
+<section class="insights-hero">
+
+  <div>
+
+    <span class="eyebrow">
+      📊 DATA & INSIGHTS
+    </span>
+
+    <h1>
+      Understanding<br>
+      through data.
+    </h1>
+
+    <p>
+      Animetrix transforms real community observations
+      into meaningful insights about animals and
+      urban environments.
+    </p>
+
+  </div>
+
+
+  <div class="insight-visual">
+
+    @if (loading) {
+
+      <div class="visual-loading">
+
+        <div class="loading-spinner"></div>
+
+        <span>
+          Loading real data...
+        </span>
+
+      </div>
+
+    }
+
+    @else if (reports === 0) {
+
+      <div class="visual-empty">
+
+        <div class="visual-empty-icon">
+          📊
+        </div>
+
+        <strong>
+          Your data story starts here.
+        </strong>
+
+        <p>
+          Real visualizations will appear as
+          observations are submitted.
+        </p>
+
+      </div>
+
+    }
+
+    @else {
+
+      <div class="chart-bars">
+
+        @for (
+          animal of animalTypes.slice(0, 5);
+          track animal.name
+        ) {
+
+          <div class="bar-item">
+
+            <span
+              class="bar"
+              [style.height.%]="
+                animal.percentage
+              "
+            ></span>
+
+            <small>
+              {{ animal.name }}
+            </small>
+
+          </div>
+
+        }
+
+      </div>
+
+
+      <div class="chart-label">
+        Animal observations by type
+      </div>
+
+    }
+
+  </div>
+
+</section>
+
+
+<!-- ========================================= -->
+<!-- MAIN STATS -->
+<!-- ========================================= -->
+
+<section class="stats-section">
+
+  <div class="stat-card">
+
+    <span>📝</span>
+
+    <strong>
+      {{ reports }}
+    </strong>
+
+    <h3>
+      Animal Reports
+    </h3>
+
+    <p>
+      Real reports submitted through the
+      Animetrix portal.
+    </p>
+
+  </div>
+
+
+  <div class="stat-card">
+
+    <span>📋</span>
+
+    <strong>
+      {{ surveyResponses }}
+    </strong>
+
+    <h3>
+      Survey Responses
+    </h3>
+
+    <p>
+      Responses collected through the
+      official survey.
+    </p>
+
+  </div>
+
+
+  <div class="stat-card">
+
+    <span>📍</span>
+
+    <strong>
+      {{ observations }}
+    </strong>
+
+    <h3>
+      Observations
+    </h3>
+
+    <p>
+      Community observations recorded
+      on Animetrix.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================= -->
+<!-- ERROR -->
+<!-- ========================================= -->
+
+@if (!loading && errorMessage) {
+
+  <section class="data-section">
+
+    <div class="data-state error-state">
+
+      <div class="empty-icon">
+        ⚠️
+      </div>
+
+      <h3>
+        Unable to load insights
+      </h3>
+
+      <p>
+        {{ errorMessage }}
+      </p>
+
+    </div>
+
+  </section>
+
+}
+
+
+<!-- ========================================= -->
+<!-- EMPTY DATA -->
+<!-- ========================================= -->
+
+@if (
+  !loading &&
+  !errorMessage &&
+  reports === 0
+) {
+
+  <section class="data-section">
+
+    <div class="data-heading">
+
+      <span class="section-label">
+        CURRENT DATA
+      </span>
+
+      <h2>
+        Insights will grow with participation.
+      </h2>
+
+      <p>
+        Animetrix does not use invented statistics.
+        Once real observations are available,
+        this page will automatically calculate
+        meaningful patterns and trends.
+      </p>
+
+    </div>
+
+
+    <div class="empty-data">
+
+      <div class="empty-icon">
+        📈
+      </div>
+
+      <h3>
+        No analysis available yet
+      </h3>
+
+      <p>
+        There are currently no animal reports
+        available to analyse. Submit a real
+        observation to start building the dataset.
+      </p>
+
+
+      <div class="buttons">
+
+        <a
+          routerLink="/report"
+          class="primary-btn"
+        >
+          Submit Report →
+        </a>
+
+
+        <a
+          routerLink="/survey"
+          class="outline-btn"
+        >
+          Take Survey
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+}
+
+
+<!-- ========================================= -->
+<!-- REAL DATA -->
+<!-- ========================================= -->
+
+@if (
+  !loading &&
+  !errorMessage &&
+  reports > 0
+) {
+
+  <section class="data-section">
+
+    <div class="data-heading">
+
+      <span class="section-label">
+        REAL DATA
+      </span>
+
+      <h2>
+        What the community is reporting.
+      </h2>
+
+      <p>
+        These insights are calculated directly
+        from real observations submitted through
+        Animetrix.
+      </p>
+
+    </div>
+
+
+    <!-- ANIMAL TYPES -->
+
+    <div class="analysis-grid">
+
+
+      <div class="analysis-card">
+
+        <div class="analysis-card-header">
+
+          <div>
+
+            <span class="mini-label">
+              ANIMAL TYPES
+            </span>
+
+            <h3>
+              Observations by animal
+            </h3>
+
+          </div>
+
+          <span class="analysis-icon">
+            🐾
+          </span>
+
+        </div>
+
+
+        @if (animalTypes.length === 0) {
+
+          <div class="small-empty">
+            No animal type information available.
+          </div>
+
+        }
+
+        @else {
+
+          <div class="animal-list">
+
+            @for (
+              animal of animalTypes;
+              track animal.name
+            ) {
+
+              <div class="animal-row">
+
+                <div class="animal-row-top">
+
+                  <span>
+                    {{ animal.name }}
+                  </span>
+
+                  <strong>
+                    {{ animal.count }}
+                  </strong>
+
+                </div>
+
+
+                <div class="progress-track">
+
+                  <div
+                    class="progress-fill"
+                    [style.width.%]="
+                      animal.percentage
+                    "
+                  ></div>
+
+                </div>
+
+
+                <small>
+                  {{ animal.percentage }}%
+                  of reports
+                </small>
+
+              </div>
+
+            }
+
+          </div>
+
+        }
+
+      </div>
+
+
+      <!-- LOCATIONS -->
+
+      <div class="analysis-card">
+
+        <div class="analysis-card-header">
+
+          <div>
+
+            <span class="mini-label">
+              LOCATIONS
+            </span>
+
+            <h3>
+              Areas with observations
+            </h3>
+
+          </div>
+
+          <span class="analysis-icon">
+            📍
+          </span>
+
+        </div>
+
+
+        @if (locations.length === 0) {
+
+          <div class="small-empty">
+            No location information available.
+          </div>
+
+        }
+
+        @else {
+
+          <div class="location-list">
+
+            @for (
+              location of locations;
+              track location.name
+            ) {
+
+              <div class="location-row">
+
+                <span>
+                  {{ location.name }}
+                </span>
+
+                <strong>
+                  {{ location.count }}
+                </strong>
+
+              </div>
+
+            }
+
+          </div>
+
+        }
+
+      </div>
+
+
+      <!-- RESOURCES -->
+
+      <div class="analysis-card resource-card">
+
+        <div class="analysis-card-header">
+
+          <div>
+
+            <span class="mini-label">
+              URBAN RESOURCES
+            </span>
+
+            <h3>
+              Reported facilities
+            </h3>
+
+          </div>
+
+          <span class="analysis-icon">
+            🏙️
+          </span>
+
+        </div>
+
+
+        <div class="resource-grid">
+
+
+          <div class="resource-item">
+
+            <span>
+              💧
+            </span>
+
+            <strong>
+              {{ resourceStats.water }}
+            </strong>
+
+            <small>
+              Water
+            </small>
+
+          </div>
+
+
+          <div class="resource-item">
+
+            <span>
+              🍚
+            </span>
+
+            <strong>
+              {{ resourceStats.food }}
+            </strong>
+
+            <small>
+              Food
+            </small>
+
+          </div>
+
+
+          <div class="resource-item">
+
+            <span>
+              🏠
+            </span>
+
+            <strong>
+              {{ resourceStats.shelter }}
+            </strong>
+
+            <small>
+              Shelter
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="data-note">
+
+      <span>ℹ️</span>
+
+      <p>
+        Insights shown here are calculated from
+        reports currently stored in the Animetrix
+        database. No values are manually invented.
+      </p>
+
+    </div>
+
+  </section>
+
+}
+
+
+<!-- ========================================= -->
+<!-- METHOD -->
+<!-- ========================================= -->
+
+<section class="method-section">
+
+  <div>
+
+    <span class="section-label">
+      OUR APPROACH
+    </span>
+
+    <h2>
+      From observations to understanding.
+    </h2>
+
+    <p class="method-intro">
+      Animetrix uses community-generated information
+      to create a clearer picture of urban animal
+      welfare.
+    </p>
+
+  </div>
+
+
+  <div class="method-list">
+
+    <div>
+
+      <span>
+        01
+      </span>
+
+      <p>
+        Collect real observations and survey responses.
+      </p>
+
+    </div>
+
+
+    <div>
+
+      <span>
+        02
+      </span>
+
+      <p>
+        Organize information by location and
+        observation type.
+      </p>
+
+    </div>
+
+
+    <div>
+
+      <span>
+        03
+      </span>
+
+      <p>
+        Identify patterns without inventing
+        missing data.
+      </p>
+
+    </div>
+
+
+    <div>
+
+      <span>
+        04
+      </span>
+
+      <p>
+        Present useful insights through clear
+        visualizations.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>

@@ -1,0 +1,90 @@
+.navbar {
+  min-height: 72px;
+  padding: 0 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255,255,255,.94);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid #e8edf2;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logo > span {
+  font-size: 28px;
+}
+
+.logo strong,
+.logo small {
+  display: block;
+}
+
+.logo strong {
+  color: #102a43;
+  font-size: 20px;
+}
+
+.logo small {
+  color: #8190a0;
+  font-size: 9px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+}
+
+.nav-links a {
+  color: #40566b;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.nav-links a:hover {
+  color: #1769aa;
+}
+
+.report-btn {
+  padding: 11px 17px;
+  border-radius: 9px;
+  background: #f47b20;
+  color: white !important;
+}
+
+@media (max-width: 900px) {
+  .navbar {
+    padding: 15px 5%;
+    flex-direction: column;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+.logout-btn {
+  border: none;
+  background: transparent;
+  color: #34495e;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 4px;
+}
+
+.logout-btn:hover {
+  color: #f47b20;
+}

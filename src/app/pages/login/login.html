@@ -1,0 +1,94 @@
+<section class="login-page">
+
+  <div class="login-card">
+
+    <div class="login-icon">
+      🐾
+    </div>
+
+    <span class="section-label">
+      ANIMETRIX ADMIN
+    </span>
+
+    <h1>
+      Welcome Back
+    </h1>
+
+    <p>
+      Sign in to access the Animetrix
+      administration dashboard.
+    </p>
+
+
+    @if (errorMessage) {
+
+      <div class="error-message">
+        ⚠️ {{ errorMessage }}
+      </div>
+
+    }
+
+
+    <form (ngSubmit)="login()">
+
+      <div class="form-group">
+
+        <label>
+          Email
+        </label>
+
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter admin email"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Password
+        </label>
+
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Enter password"
+          required
+        >
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="login-btn"
+        [disabled]="loading"
+      >
+
+        {{ loading ? 'Signing in...' : 'Sign In' }}
+
+        @if (!loading) {
+          <span>→</span>
+        }
+
+      </button>
+
+    </form>
+
+
+    <a
+      routerLink="/"
+      class="back-link"
+    >
+      ← Back to Animetrix
+    </a>
+
+  </div>
+
+</section>
