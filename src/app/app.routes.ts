@@ -8,7 +8,7 @@ import { Community } from './pages/community/community';
 import { Insights } from './pages/insights/insights';
 import { About } from './pages/about/about';
 import { Admin } from './pages/admin/admin';
-import { Login } from './pages/login/login';
+import { GetHelp } from './pages/get-help/get-help';
 
 export const routes: Routes = [
 
@@ -47,9 +47,10 @@ export const routes: Routes = [
     component: About
   },
   {
-  path: 'login',
-  component: Login
-  },
+  path: 'get-help',
+  component: GetHelp
+},
+  
 
   {
     path: 'admin',

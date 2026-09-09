@@ -1,0 +1,552 @@
+<div class="help-page">
+
+  <!-- HERO -->
+  <section class="help-hero">
+
+    <div class="hero-content">
+
+      <span class="eyebrow">
+        🐾 ANIMETRIX SUPPORT
+      </span>
+
+      <h1>
+        Find Help<br>
+        <span>Near You</span>
+      </h1>
+
+      <p>
+        Find veterinary care, animal welfare organisations
+        and support services around your location.
+      </p>
+
+
+      <!-- LOCATION BOX -->
+      <div class="location-box">
+
+        <div class="location-icon">
+          📍
+        </div>
+
+        <div class="location-text">
+
+          <strong>
+            Find help around your location
+          </strong>
+
+          <span>
+            Allow location access to discover nearby
+            veterinary services.
+          </span>
+
+        </div>
+
+        <button
+          class="location-btn"
+          type="button"
+          (click)="useMyLocation()"
+        >
+          📍 Use My Location
+        </button>
+
+      </div>
+
+
+      @if (locationMessage) {
+
+        <p class="location-message">
+          {{ locationMessage }}
+        </p>
+
+      }
+
+    </div>
+
+
+    <div class="hero-paw">
+      🐾
+    </div>
+
+  </section>
+
+
+  <!-- EMERGENCY -->
+  <section class="section">
+
+    <div class="section-heading">
+
+      <div>
+
+        <span class="section-label">
+          URGENT ASSISTANCE
+        </span>
+
+        <h2>
+          Emergency Animal Help
+        </h2>
+
+      </div>
+
+      <span class="emergency-badge">
+        🚨 Emergency
+      </span>
+
+    </div>
+
+
+    <div class="emergency-card">
+
+      <div class="emergency-icon">
+        🚑
+      </div>
+
+
+      <div class="emergency-content">
+
+        <h3>
+          Need immediate help?
+        </h3>
+
+        <p>
+          If an animal is injured, sick or in immediate
+          danger, seek professional veterinary assistance
+          as soon as possible.
+        </p>
+
+      </div>
+
+
+      <div class="emergency-action">
+
+        <button
+          type="button"
+          class="primary-action"
+          (click)="scrollToVets()"
+        >
+          Find Veterinary Help
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- VETERINARY -->
+  <section
+    class="section"
+    id="vets"
+  >
+
+    <div class="section-heading">
+
+      <div>
+
+        <span class="section-label">
+          MEDICAL CARE
+        </span>
+
+        <h2>
+          Nearby Veterinary Care
+        </h2>
+
+        <p>
+          Veterinary services mapped around your
+          selected location.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- BEFORE LOCATION -->
+    @if (!locationSelected) {
+
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          📍
+        </div>
+
+        <h3>
+          Find veterinary help near you
+        </h3>
+
+        <p>
+          Allow location access to discover
+          veterinary services nearby.
+        </p>
+
+        <button
+          type="button"
+          class="secondary-btn"
+          (click)="useMyLocation()"
+        >
+          📍 Find Near Me
+        </button>
+
+      </div>
+
+    }
+
+
+    <!-- LOADING -->
+    @if (
+      locationSelected &&
+      isLoadingVets
+    ) {
+
+      <div class="loading-state">
+
+        <div class="loading-icon">
+          🔎
+        </div>
+
+        <h3>
+          Finding veterinary services...
+        </h3>
+
+        <p>
+          We're checking veterinary services
+          around your location.
+        </p>
+
+      </div>
+
+    }
+
+
+    <!-- ERROR / NO RESULTS -->
+    @if (
+      locationSelected &&
+      !isLoadingVets &&
+      vetError
+    ) {
+
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          🏥
+        </div>
+
+        <h3>
+          No nearby results found
+        </h3>
+
+        <p>
+          {{ vetError }}
+        </p>
+
+        <button
+          type="button"
+          class="secondary-btn"
+          (click)="searchMoreOnMaps()"
+        >
+          🗺️ Search Veterinary Services
+        </button>
+
+        <button
+          type="button"
+          class="retry-btn"
+          (click)="loadNearbyVets()"
+        >
+          🔄 Try Again
+        </button>
+
+      </div>
+
+    }
+
+
+    <!-- RESULTS -->
+    @if (
+      locationSelected &&
+      !isLoadingVets &&
+      nearbyVets.length > 0
+    ) {
+
+      <div class="results-top">
+
+        <div>
+
+          <strong>
+            {{ nearbyVets.length }} nearby services found
+          </strong>
+
+          <span>
+            Results are based on mapped location data.
+          </span>
+
+        </div>
+
+        <button
+          type="button"
+          class="refresh-btn"
+          (click)="loadNearbyVets()"
+        >
+          🔄 Refresh
+        </button>
+
+      </div>
+
+
+      <div class="vet-grid">
+
+        @for (
+          vet of nearbyVets;
+          track vet.latitude + '-' + vet.longitude
+        ) {
+
+          <div class="vet-card">
+
+            <div class="vet-top">
+
+              <div class="vet-icon">
+                🏥
+              </div>
+
+              <span class="distance-badge">
+                {{ vet.distance < 1
+                  ? (vet.distance * 1000 | number:'1.0-0') + ' m'
+                  : (vet.distance | number:'1.1-1') + ' km'
+                }}
+              </span>
+
+            </div>
+
+
+            <span class="card-type">
+              {{ vet.type }}
+            </span>
+
+            <h3>
+              {{ vet.name }}
+            </h3>
+
+            <p class="vet-address">
+              📍 {{ vet.address }}
+            </p>
+
+
+            <div class="vet-actions">
+
+              @if (vet.phone) {
+
+                <button
+                  type="button"
+                  class="call-btn"
+                  (click)="callNumber(vet.phone!)"
+                >
+                  📞 Call
+                </button>
+
+              }
+
+              <button
+                type="button"
+                class="direction-btn"
+                (click)="getDirections(
+                  vet.latitude,
+                  vet.longitude
+                )"
+              >
+                🗺️ Directions
+              </button>
+
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+
+      <div class="map-search-box">
+
+        <div>
+
+          <strong>
+            Can't find what you're looking for?
+          </strong>
+
+          <p>
+            Search for more veterinary services
+            directly on the map.
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          class="outline-btn"
+          (click)="searchMoreOnMaps()"
+        >
+          🗺️ Search More
+        </button>
+
+      </div>
+
+    }
+
+  </section>
+
+
+  <!-- NGOS -->
+  <section class="section ngo-section">
+
+    <div class="section-heading">
+
+      <div>
+
+        <span class="section-label">
+          ANIMAL WELFARE
+        </span>
+
+        <h2>
+          NGOs & Animal Welfare
+        </h2>
+
+        <p>
+          Explore verified animal-welfare support
+          and recognised organisation information.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="ngo-grid">
+
+      @for (
+        ngo of ngos;
+        track ngo.name
+      ) {
+
+        <div class="ngo-card">
+
+          <div class="ngo-header">
+
+            <div class="ngo-icon">
+              {{ ngo.icon }}
+            </div>
+
+            <span class="verified-badge">
+              ✓ Verified Source
+            </span>
+
+          </div>
+
+
+          <span class="card-type">
+            ANIMAL WELFARE
+          </span>
+
+          <h3>
+            {{ ngo.name }}
+          </h3>
+
+          <p>
+            {{ ngo.description }}
+          </p>
+
+
+          <div class="ngo-location">
+            📍 {{ ngo.location }}
+          </div>
+
+
+          <div class="ngo-actions">
+
+            @if (ngo.phone) {
+
+              <button
+                type="button"
+                class="call-btn"
+                (click)="callNumber(ngo.phone!)"
+              >
+                📞 Contact
+              </button>
+
+            }
+
+            <button
+              type="button"
+              class="direction-btn"
+              (click)="openWebsite(ngo.website)"
+            >
+              🌐 Visit Website
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+
+    <div class="official-directory">
+
+      <div class="directory-icon">
+        🏛️
+      </div>
+
+      <div>
+
+        <h3>
+          Looking for an organisation in your city?
+        </h3>
+
+        <p>
+          AWBI maintains a directory of recognised
+          animal-welfare organisations. Use the official
+          directory to explore organisations by state
+          and district.
+        </p>
+
+      </div>
+
+      <button
+        type="button"
+        class="primary-action"
+        (click)="openWebsite(
+          'https://www.awbi.gov.in/recognition'
+        )"
+      >
+        Explore Directory
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- RESPONSIBLE HELP -->
+  <section class="help-info">
+
+    <div class="info-icon">
+      💙
+    </div>
+
+    <div>
+
+      <h3>
+        Help responsibly
+      </h3>
+
+      <p>
+        Animetrix uses location-based and publicly
+        available information to help you find support.
+        Contact details and availability may change,
+        so please verify them before visiting.
+      </p>
+
+    </div>
+
+  </section>
+
+</div>

@@ -39,23 +39,13 @@
       </a>
     }
 
-    @if (isLoggedIn) {
-
-      <button
-        class="logout-btn"
-        type="button"
-        (click)="logout()"
-      >
-        Logout
-      </button>
-
-    } @else {
-
-      <a routerLink="/login">
-        Login
-      </a>
-
-    }
+    <!-- Get Help -->
+    <a
+      routerLink="/get-help"
+      class="help-btn"
+    >
+      🆘 Get Help
+    </a>
 
     <a
       routerLink="/report"
