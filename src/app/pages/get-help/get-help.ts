@@ -3,6 +3,7 @@ import { DecimalPipe } from '@angular/common';
 
 interface Vet {
   name: string;
+  type: string;
   address: string;
   phone: string;
   latitude: number;
@@ -10,7 +11,7 @@ interface Vet {
   distance: number;
 }
 
-interface HelpOrganisation {
+interface Ngo {
   name: string;
   description: string;
   phone: string;
@@ -28,456 +29,41 @@ interface HelpOrganisation {
 })
 export class GetHelp {
 
-  // Location
+  // ==========================================
+  // LOCATION
+  // ==========================================
+
   latitude: number | null = null;
   longitude: number | null = null;
 
-  loadingLocation = false;
-  loadingVets = false;
+  locationMessage: string = '';
+  locationSelected: boolean = false;
 
-  locationError = '';
-  vetError = '';
 
-  // Veterinary doctors
-  vets: Vet[] = [];
+  // ==========================================
+  // VETERINARY SERVICES
+  // ==========================================
 
-  // Search radius in kilometres
-  searchRadius = 10;
+  isLoadingVets: boolean = false;
 
-  // --------------------------------------------------
-  // GET USER LOCATION
-  // --------------------------------------------------
-useMyLocation() {
-  this.getLocation();
-}
+  nearbyVets: Vet[] = [];
 
-  getLocation() {
+  vetError: string = '';
 
-    this.loadingLocation = true;
-    this.locationError = '';
-    this.vetError = '';
-    this.vets = [];
+  searchRadius: number = 10;
 
-    if (!navigator.geolocation) {
 
-      this.loadingLocation = false;
+  // ==========================================
+  // NGO / ANIMAL WELFARE ORGANISATIONS
+  // ==========================================
 
-      this.locationError =
-        'Geolocation is not supported by your browser.';
-
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-
-      // SUCCESS
-      (position) => {
-
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
-
-        this.loadingLocation = false;
-
-        console.log(
-          'Latitude:',
-          this.latitude,
-          'Longitude:',
-          this.longitude
-        );
-
-        // Automatically find nearby vets
-        this.findNearbyVets();
-      },
-
-      // ERROR
-      (error) => {
-
-        this.loadingLocation = false;
-
-        console.error('Location Error:', error);
-
-        if (error.code === 1) {
-
-          this.locationError =
-            'Location permission was denied. Please allow location access and try again.';
-
-        } else if (error.code === 2) {
-
-          this.locationError =
-            'Your location could not be determined. Please try again.';
-
-        } else if (error.code === 3) {
-
-          this.locationError =
-            'Location request timed out. Please try again.';
-
-        } else {
-
-          this.locationError =
-            'Unable to get your location. Please try again.';
-        }
-      },
-
-      // OPTIONS
-      {
-        enableHighAccuracy: false,
-        timeout: 10000,
-        maximumAge: 300000
-      }
-    );
-  }
-
-
-  // --------------------------------------------------
-  // FIND NEARBY VETERINARY CLINICS
-  // --------------------------------------------------
-
-  async findNearbyVets() {
-
-    if (
-      this.latitude === null ||
-      this.longitude === null
-    ) {
-
-      this.locationError =
-        'Please allow location access first.';
-
-      return;
-    }
-
-    this.loadingVets = true;
-    this.vetError = '';
-    this.vets = [];
-
-    const lat = this.latitude;
-    const lon = this.longitude;
-
-    /*
-      Overpass API searches OpenStreetMap
-      for veterinary places around the user's location.
-    */
-
-    const radiusInMeters = this.searchRadius * 1000;
-
-    const query = `
-      [out:json][timeout:25];
-
-      (
-        node["amenity"="veterinary"]
-          (around:${radiusInMeters},${lat},${lon});
-
-        way["amenity"="veterinary"]
-          (around:${radiusInMeters},${lat},${lon});
-
-        relation["amenity"="veterinary"]
-          (around:${radiusInMeters},${lat},${lon});
-      );
-
-      out center tags;
-    `;
-
-    const url =
-      'https://overpass-api.de/api/interpreter?data=' +
-      encodeURIComponent(query);
-
-    try {
-
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch veterinary data.');
-      }
-
-      const data = await response.json();
-
-      const results: Vet[] = [];
-
-      for (const element of data.elements) {
-
-        const tags = element.tags || {};
-
-        const vetLatitude =
-          element.lat ??
-          element.center?.lat;
-
-        const vetLongitude =
-          element.lon ??
-          element.center?.lon;
-
-        if (
-          vetLatitude === undefined ||
-          vetLongitude === undefined
-        ) {
-          continue;
-        }
-
-        const name =
-          tags['name'] ||
-          tags['name:en'] ||
-          'Veterinary Clinic';
-
-        const address =
-          this.createAddress(tags);
-
-        const phone =
-          tags['phone'] ||
-          tags['contact:phone'] ||
-          '';
-
-        const distance =
-          this.calculateDistance(
-            lat,
-            lon,
-            vetLatitude,
-            vetLongitude
-          );
-
-        results.push({
-          name,
-          address,
-          phone,
-          latitude: vetLatitude,
-          longitude: vetLongitude,
-          distance
-        });
-      }
-
-      // Remove duplicate places
-      const uniqueVets =
-        results.filter(
-          (vet, index, self) =>
-            index ===
-            self.findIndex(
-              item =>
-                item.name === vet.name &&
-                Math.abs(item.latitude - vet.latitude) < 0.0001 &&
-                Math.abs(item.longitude - vet.longitude) < 0.0001
-            )
-        );
-
-      // Nearest first
-      uniqueVets.sort(
-        (a, b) => a.distance - b.distance
-      );
-
-      // Show maximum 20 results
-      this.vets = uniqueVets.slice(0, 20);
-
-      if (this.vets.length === 0) {
-
-        this.vetError =
-          `No veterinary clinics were found within ${this.searchRadius} km. Try a larger search radius.`;
-      }
-
-    } catch (error) {
-
-      console.error(
-        'Veterinary search error:',
-        error
-      );
-
-      this.vetError =
-        'Unable to load nearby veterinary clinics. Please check your internet connection and try again.';
-    }
-
-    this.loadingVets = false;
-  }
-
-
-  // --------------------------------------------------
-  // CREATE ADDRESS
-  // --------------------------------------------------
-
-  private createAddress(tags: any): string {
-
-    const parts: string[] = [];
-
-    if (tags['addr:housenumber']) {
-      parts.push(tags['addr:housenumber']);
-    }
-
-    if (tags['addr:street']) {
-      parts.push(tags['addr:street']);
-    }
-
-    if (tags['addr:suburb']) {
-      parts.push(tags['addr:suburb']);
-    }
-
-    if (tags['addr:city']) {
-      parts.push(tags['addr:city']);
-    }
-
-    if (tags['addr:postcode']) {
-      parts.push(tags['addr:postcode']);
-    }
-
-    if (parts.length === 0) {
-      return 'Address not available';
-    }
-
-    return parts.join(', ');
-  }
-
-
-  // --------------------------------------------------
-  // CALCULATE DISTANCE
-  // --------------------------------------------------
-
-  private calculateDistance(
-    lat1: number,
-    lon1: number,
-    lat2: number,
-    lon2: number
-  ): number {
-
-    const earthRadius = 6371;
-
-    const dLat =
-      this.toRadians(lat2 - lat1);
-
-    const dLon =
-      this.toRadians(lon2 - lon1);
-
-    const a =
-      Math.sin(dLat / 2) *
-      Math.sin(dLat / 2) +
-
-      Math.cos(this.toRadians(lat1)) *
-      Math.cos(this.toRadians(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
-
-    const c =
-      2 *
-      Math.atan2(
-        Math.sqrt(a),
-        Math.sqrt(1 - a)
-      );
-
-    return earthRadius * c;
-  }
-
-
-  private toRadians(value: number): number {
-    return value * Math.PI / 180;
-  }
-
-
-  // --------------------------------------------------
-  // CALL VET
-  // --------------------------------------------------
-
-  callVet(phone: string) {
-
-    if (!phone) {
-      return;
-    }
-
-    window.location.href =
-      `tel:${phone}`;
-  }
-
-
-  // --------------------------------------------------
-  // GOOGLE MAPS DIRECTIONS
-  // --------------------------------------------------
-
-  getDirections(
-    latitude: number,
-    longitude: number
-  ) {
-
-    if (
-      this.latitude === null ||
-      this.longitude === null
-    ) {
-      return;
-    }
-
-    const url =
-      `https://www.google.com/maps/dir/?api=1` +
-      `&origin=${this.latitude},${this.longitude}` +
-      `&destination=${latitude},${longitude}`;
-
-    window.open(
-      url,
-      '_blank'
-    );
-  }
-
-
-  // --------------------------------------------------
-  // SEARCH MORE ON GOOGLE MAPS
-  // --------------------------------------------------
-
-  searchMoreOnMaps() {
-
-    if (
-      this.latitude === null ||
-      this.longitude === null
-    ) {
-      return;
-    }
-
-    const url =
-      `https://www.google.com/maps/search/veterinary+clinic/@` +
-      `${this.latitude},${this.longitude},14z`;
-
-    window.open(
-      url,
-      '_blank'
-    );
-  }
-
-
-  // --------------------------------------------------
-  // CHANGE SEARCH RADIUS
-  // --------------------------------------------------
-
-  changeRadius() {
-
-    if (
-      this.latitude === null ||
-      this.longitude === null
-    ) {
-      this.getLocation();
-      return;
-    }
-
-    this.findNearbyVets();
-  }
-
-
-  // --------------------------------------------------
-  // REFRESH LOCATION + VETS
-  // --------------------------------------------------
-
-  refreshLocation() {
-
-    this.latitude = null;
-    this.longitude = null;
-
-    this.vets = [];
-
-    this.locationError = '';
-    this.vetError = '';
-
-    this.getLocation();
-  }
-
-
-  // --------------------------------------------------
-  // OFFICIAL HELP ORGANISATIONS
-  // --------------------------------------------------
-
-  helpOrganisations: HelpOrganisation[] = [
+  ngos: Ngo[] = [
 
     {
       name: 'People For Animals (PFA)',
 
       description:
-        'A nationwide animal-welfare network providing rescue, treatment, shelters and other animal-care support through its units.',
+        'A nationwide animal-welfare network providing rescue, treatment, shelters and animal-care support through its units.',
 
       phone:
         '01120818191',
@@ -511,21 +97,724 @@ useMyLocation() {
       icon:
         '🏛️'
     }
+
   ];
 
 
-  // --------------------------------------------------
-  // OPEN ORGANISATION WEBSITE
-  // --------------------------------------------------
+  // ==========================================
+  // USE MY LOCATION
+  // ==========================================
+
+  useMyLocation(): void {
+
+    this.locationMessage = '';
+    this.vetError = '';
+
+    this.nearbyVets = [];
+
+    if (!navigator.geolocation) {
+
+      this.locationSelected = false;
+
+      this.locationMessage =
+        'Geolocation is not supported by your browser.';
+
+      return;
+    }
+
+
+    this.locationMessage =
+      'Getting your location...';
+
+
+    navigator.geolocation.getCurrentPosition(
+
+      // --------------------------------------
+      // SUCCESS
+      // --------------------------------------
+
+      (position) => {
+
+        this.latitude =
+          position.coords.latitude;
+
+        this.longitude =
+          position.coords.longitude;
+
+        this.locationSelected =
+          true;
+
+        this.locationMessage =
+          'Location found! Finding veterinary services near you...';
+
+
+        console.log(
+          'User latitude:',
+          this.latitude
+        );
+
+        console.log(
+          'User longitude:',
+          this.longitude
+        );
+
+
+        // Automatically search nearby vets
+        this.loadNearbyVets();
+
+      },
+
+
+      // --------------------------------------
+      // ERROR
+      // --------------------------------------
+
+      (error) => {
+
+        console.error(
+          'Location error:',
+          error
+        );
+
+        this.locationSelected =
+          false;
+
+
+        if (error.code === 1) {
+
+          this.locationMessage =
+            'Location permission was denied. Please allow location access and try again.';
+
+        }
+
+        else if (error.code === 2) {
+
+          this.locationMessage =
+            'Your location could not be determined. Please try again.';
+
+        }
+
+        else if (error.code === 3) {
+
+          this.locationMessage =
+            'Location request timed out. Please try again.';
+
+        }
+
+        else {
+
+          this.locationMessage =
+            'Unable to get your location. Please try again.';
+        }
+
+      },
+
+
+      // --------------------------------------
+      // LOCATION OPTIONS
+      // --------------------------------------
+
+      {
+        enableHighAccuracy: false,
+        timeout: 10000,
+        maximumAge: 300000
+      }
+
+    );
+
+  }
+
+
+  // ==========================================
+  // LOAD NEARBY VETERINARY SERVICES
+  // ==========================================
+
+  async loadNearbyVets(): Promise<void> {
+
+    if (
+      this.latitude === null ||
+      this.longitude === null
+    ) {
+
+      this.locationMessage =
+        'Please allow location access first.';
+
+      return;
+    }
+
+
+    this.isLoadingVets =
+      true;
+
+    this.vetError =
+      '';
+
+    this.nearbyVets =
+      [];
+
+
+    const userLatitude =
+      this.latitude;
+
+    const userLongitude =
+      this.longitude;
+
+
+    const radiusInMeters =
+      this.searchRadius * 1000;
+
+
+    // OpenStreetMap Overpass query
+    const query = `
+
+      [out:json][timeout:25];
+
+      (
+
+        node["amenity"="veterinary"]
+        (around:${radiusInMeters},${userLatitude},${userLongitude});
+
+        way["amenity"="veterinary"]
+        (around:${radiusInMeters},${userLatitude},${userLongitude});
+
+        relation["amenity"="veterinary"]
+        (around:${radiusInMeters},${userLatitude},${userLongitude});
+
+      );
+
+      out center tags;
+
+    `;
+
+
+    const apiUrl =
+      'https://overpass-api.de/api/interpreter?data=' +
+      encodeURIComponent(query);
+
+
+    try {
+
+      const response =
+        await fetch(apiUrl);
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          'Veterinary API request failed.'
+        );
+      }
+
+
+      const data =
+        await response.json();
+
+
+      const results: Vet[] = [];
+
+
+      // ======================================
+      // PROCESS RESULTS
+      // ======================================
+
+      for (
+        const element of data.elements
+      ) {
+
+        const tags =
+          element.tags || {};
+
+
+        const vetLatitude =
+          element.lat ??
+          element.center?.lat;
+
+
+        const vetLongitude =
+          element.lon ??
+          element.center?.lon;
+
+
+        if (
+          vetLatitude === undefined ||
+          vetLongitude === undefined
+        ) {
+
+          continue;
+        }
+
+
+        const name =
+          tags['name'] ||
+          tags['name:en'] ||
+          'Veterinary Clinic';
+
+
+        const address =
+          this.createAddress(tags);
+
+
+        const phone =
+          tags['phone'] ||
+          tags['contact:phone'] ||
+          '';
+
+
+        const distance =
+          this.calculateDistance(
+
+            userLatitude,
+            userLongitude,
+
+            vetLatitude,
+            vetLongitude
+
+          );
+
+
+        results.push({
+
+          name:
+
+            name,
+
+          type:
+
+            tags['healthcare'] === 'veterinary'
+              ? 'Veterinary Care'
+              : 'Veterinary Clinic',
+
+          address:
+
+            address,
+
+          phone:
+
+            phone,
+
+          latitude:
+
+            vetLatitude,
+
+          longitude:
+
+            vetLongitude,
+
+          distance:
+
+            distance
+
+        });
+
+      }
+
+
+      // ======================================
+      // REMOVE DUPLICATES
+      // ======================================
+
+      const uniqueVets =
+        results.filter(
+
+          (vet, index, array) =>
+
+            index ===
+            array.findIndex(
+
+              item =>
+
+                item.name === vet.name &&
+
+                Math.abs(
+                  item.latitude -
+                  vet.latitude
+                ) < 0.0001 &&
+
+                Math.abs(
+                  item.longitude -
+                  vet.longitude
+                ) < 0.0001
+
+            )
+
+        );
+
+
+      // ======================================
+      // SORT NEAREST FIRST
+      // ======================================
+
+      uniqueVets.sort(
+
+        (a, b) =>
+          a.distance -
+          b.distance
+
+      );
+
+
+      // ======================================
+      // SHOW MAXIMUM 20
+      // ======================================
+
+      this.nearbyVets =
+        uniqueVets.slice(0, 20);
+
+
+      // ======================================
+      // NO RESULTS
+      // ======================================
+
+      if (
+        this.nearbyVets.length === 0
+      ) {
+
+        this.vetError =
+          `No veterinary clinics were found within ${this.searchRadius} km. Try searching for more services on the map.`;
+
+      }
+
+    }
+
+
+    catch (error) {
+
+      console.error(
+        'Veterinary search error:',
+        error
+      );
+
+
+      this.vetError =
+        'Unable to load nearby veterinary services. Please check your internet connection and try again.';
+
+    }
+
+
+    finally {
+
+      this.isLoadingVets =
+        false;
+
+    }
+
+  }
+
+
+  // ==========================================
+  // SCROLL TO VETERINARY SECTION
+  // ==========================================
+
+  scrollToVets(): void {
+
+    const section =
+      document.getElementById('vets');
+
+
+    if (section) {
+
+      section.scrollIntoView({
+
+        behavior:
+          'smooth',
+
+        block:
+          'start'
+
+      });
+
+    }
+
+  }
+
+
+  // ==========================================
+  // CREATE ADDRESS
+  // ==========================================
+
+  private createAddress(
+    tags: any
+  ): string {
+
+    const parts: string[] = [];
+
+
+    if (
+      tags['addr:housenumber']
+    ) {
+
+      parts.push(
+        tags['addr:housenumber']
+      );
+
+    }
+
+
+    if (
+      tags['addr:street']
+    ) {
+
+      parts.push(
+        tags['addr:street']
+      );
+
+    }
+
+
+    if (
+      tags['addr:suburb']
+    ) {
+
+      parts.push(
+        tags['addr:suburb']
+      );
+
+    }
+
+
+    if (
+      tags['addr:city']
+    ) {
+
+      parts.push(
+        tags['addr:city']
+      );
+
+    }
+
+
+    if (
+      tags['addr:postcode']
+    ) {
+
+      parts.push(
+        tags['addr:postcode']
+      );
+
+    }
+
+
+    if (
+      parts.length === 0
+    ) {
+
+      return 'Address not available';
+
+    }
+
+
+    return parts.join(', ');
+
+  }
+
+
+  // ==========================================
+  // CALCULATE DISTANCE
+  // ==========================================
+
+  private calculateDistance(
+
+    lat1: number,
+    lon1: number,
+
+    lat2: number,
+    lon2: number
+
+  ): number {
+
+    const earthRadius =
+      6371;
+
+
+    const dLat =
+      this.toRadians(
+        lat2 - lat1
+      );
+
+
+    const dLon =
+      this.toRadians(
+        lon2 - lon1
+      );
+
+
+    const a =
+
+      Math.sin(dLat / 2) *
+      Math.sin(dLat / 2)
+
+      +
+
+      Math.cos(
+        this.toRadians(lat1)
+      )
+
+      *
+
+      Math.cos(
+        this.toRadians(lat2)
+      )
+
+      *
+
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+
+
+    const c =
+
+      2 *
+
+      Math.atan2(
+
+        Math.sqrt(a),
+
+        Math.sqrt(1 - a)
+
+      );
+
+
+    return (
+      earthRadius * c
+    );
+
+  }
+
+
+  private toRadians(
+    value: number
+  ): number {
+
+    return (
+      value *
+      Math.PI /
+      180
+    );
+
+  }
+
+
+  // ==========================================
+  // CALL PHONE NUMBER
+  // ==========================================
+
+  callNumber(
+    phone: string
+  ): void {
+
+    if (!phone) {
+
+      return;
+
+    }
+
+
+    window.location.href =
+      `tel:${phone}`;
+
+  }
+
+
+  // ==========================================
+  // GOOGLE MAPS DIRECTIONS
+  // ==========================================
+
+  getDirections(
+
+    latitude: number,
+    longitude: number
+
+  ): void {
+
+    if (
+
+      this.latitude === null ||
+
+      this.longitude === null
+
+    ) {
+
+      return;
+
+    }
+
+
+    const mapsUrl =
+
+      `https://www.google.com/maps/dir/?api=1` +
+
+      `&origin=${this.latitude},${this.longitude}` +
+
+      `&destination=${latitude},${longitude}`;
+
+
+    window.open(
+      mapsUrl,
+      '_blank'
+    );
+
+  }
+
+
+  // ==========================================
+  // SEARCH MORE VETERINARY SERVICES
+  // ==========================================
+
+  searchMoreOnMaps(): void {
+
+    if (
+
+      this.latitude === null ||
+
+      this.longitude === null
+
+    ) {
+
+      return;
+
+    }
+
+
+    const mapsUrl =
+
+      `https://www.google.com/maps/search/veterinary+clinic/@` +
+
+      `${this.latitude},${this.longitude},14z`;
+
+
+    window.open(
+      mapsUrl,
+      '_blank'
+    );
+
+  }
+
+
+  // ==========================================
+  // OPEN NGO / OFFICIAL WEBSITE
+  // ==========================================
 
   openWebsite(
     website: string
-  ) {
+  ): void {
+
+    if (!website) {
+
+      return;
+
+    }
+
 
     window.open(
+
       website,
-      '_blank'
+
+      '_blank',
+
+      'noopener,noreferrer'
+
     );
+
   }
 
 }
