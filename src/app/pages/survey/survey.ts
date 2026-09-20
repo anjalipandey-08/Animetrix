@@ -15,7 +15,7 @@ export class Survey {
   constructor(private sanitizer: DomSanitizer) {
 
     this.formUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      'https://docs.google.com/forms/d/e/1FAIpQLSfE1uvj08lWrRamUK7VdrZQMJlUb6D9auYYCcF4GwtyQ-1DCQ/viewform?embedded=true'
+      'https://docs.google.com/forms/d/e/1FAIpQLSfE1uvj08lWrRamUK7VdrZQMJlUb6D9auYYCcF4GwtyQ-1DCQ/viewform?usp=header'
     );
 
   }

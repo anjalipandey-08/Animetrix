@@ -1,3 +1,7 @@
+<!-- ================================= -->
+<!-- COMMUNITY HERO -->
+<!-- ================================= -->
+
 <section class="community-hero">
 
   <div class="community-text">
@@ -20,20 +24,29 @@
       routerLink="/report"
       class="primary-btn"
     >
-      Share an Observation →
+      Share an Observation
+      <span>→</span>
     </a>
 
   </div>
 
 
-  <img
-    src="images/communityhelping.jpg"
-    alt="Community helping animals"
-  >
+  <div class="hero-image">
+
+    <img
+      src="images/community-action.png"
+      alt="Community members helping animals"
+    >
+
+  </div>
 
 </section>
 
 
+
+<!-- ================================= -->
+<!-- COMMUNITY INTRO -->
+<!-- ================================= -->
 
 <section class="community-content">
 
@@ -57,12 +70,18 @@
 
 
 
+  <!-- COMMUNITY CARDS -->
+
   <div class="community-grid">
 
     <article class="community-card">
 
       <div class="icon">
         📍
+      </div>
+
+      <div class="card-number">
+        01
       </div>
 
       <h3>
@@ -84,6 +103,10 @@
         📝
       </div>
 
+      <div class="card-number">
+        02
+      </div>
+
       <h3>
         Report
       </h3>
@@ -103,6 +126,10 @@
         💡
       </div>
 
+      <div class="card-number">
+        03
+      </div>
+
       <h3>
         Understand
       </h3>
@@ -120,6 +147,10 @@
 
       <div class="icon">
         🤝
+      </div>
+
+      <div class="card-number">
+        04
       </div>
 
       <h3>
@@ -233,7 +264,8 @@
         routerLink="/report"
         class="primary-btn"
       >
-        Share an Observation →
+        Share an Observation
+        <span>→</span>
       </a>
 
     </div>
@@ -269,6 +301,8 @@
           }
 
 
+          <!-- REPORT CONTENT -->
+
           <div class="observation-body">
 
             <div class="observation-top">
@@ -280,9 +314,7 @@
               @if (report.created_at) {
 
                 <span class="observation-date">
-
                   {{ report.created_at | date:'dd MMM yyyy' }}
-
                 </span>
 
               }
@@ -379,9 +411,13 @@
   <div class="image-card">
 
     <img
-      src="images/streetdog.jpg"
-      alt="Street animal observation"
+      src="images/urban-dog-obervation.png"
+      alt="Urban dog observation"
     >
+
+    <div class="image-overlay">
+      <span>URBAN ANIMAL LIFE</span>
+    </div>
 
   </div>
 
@@ -410,6 +446,7 @@
         class="primary-btn"
       >
         Take Survey
+        <span>→</span>
       </a>
 
 

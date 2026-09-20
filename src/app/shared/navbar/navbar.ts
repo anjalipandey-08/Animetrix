@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 import { Auth } from '../../core/services/auth';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink],
+  imports: [
+    RouterLink,
+    RouterLinkActive
+  ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
@@ -15,15 +18,20 @@ export class Navbar implements OnInit {
   isLoggedIn = false;
   isAdmin = false;
 
+  menuOpen = false;
+
+
   constructor(
     private auth: Auth,
     private router: Router
   ) {}
 
+
   async ngOnInit() {
 
     // Check current login status
     await this.updateAuthState();
+
 
     // Listen for login/logout changes
     this.auth.onAuthStateChange(
@@ -33,6 +41,7 @@ export class Navbar implements OnInit {
     );
   }
 
+
   async updateAuthState() {
 
     const user =
@@ -40,13 +49,41 @@ export class Navbar implements OnInit {
 
     this.isLoggedIn = !!user;
 
+
     if (user) {
+
       this.isAdmin =
         await this.auth.isAdmin();
+
     } else {
+
       this.isAdmin = false;
+
     }
   }
+
+
+  /* ================================
+     MOBILE MENU
+  ================================ */
+
+  toggleMenu() {
+
+    this.menuOpen = !this.menuOpen;
+
+  }
+
+
+  closeMenu() {
+
+    this.menuOpen = false;
+
+  }
+
+
+  /* ================================
+     LOGOUT
+  ================================ */
 
   async logout() {
 
@@ -56,6 +93,8 @@ export class Navbar implements OnInit {
 
       this.isLoggedIn = false;
       this.isAdmin = false;
+
+      this.closeMenu();
 
       await this.router.navigate(['/']);
 
@@ -68,4 +107,5 @@ export class Navbar implements OnInit {
 
     }
   }
+
 }

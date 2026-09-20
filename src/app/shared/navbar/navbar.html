@@ -1,55 +1,104 @@
 <nav class="navbar">
 
+  <!-- LOGO -->
   <a routerLink="/" class="logo">
-    <span>🐾</span>
+    <span class="logo-icon">🐾</span>
 
-    <div>
+    <div class="logo-text">
       <strong>Animetrix</strong>
       <small>Technology for every paw</small>
     </div>
   </a>
 
-  <div class="nav-links">
 
-    <a routerLink="/">Home</a>
+  <!-- MOBILE MENU BUTTON -->
+  <button
+    class="menu-btn"
+    type="button"
+    (click)="toggleMenu()"
+    [attr.aria-expanded]="menuOpen"
+    aria-label="Toggle navigation"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 
-    <a routerLink="/explore">
+
+  <!-- NAVIGATION -->
+  <div
+    class="nav-links"
+    [class.mobile-open]="menuOpen"
+  >
+
+    <a
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      (click)="closeMenu()"
+    >
+      Home
+    </a>
+
+    <a
+      routerLink="/explore"
+      routerLinkActive="active"
+      (click)="closeMenu()"
+    >
       Explore
     </a>
 
-    <a routerLink="/community">
+    <a
+      routerLink="/community"
+      routerLinkActive="active"
+      (click)="closeMenu()"
+    >
       Community
     </a>
 
-    <a routerLink="/insights">
+    <a
+      routerLink="/insights"
+      routerLinkActive="active"
+      (click)="closeMenu()"
+    >
       Insights
     </a>
 
-    <a routerLink="/about">
+    <a
+      routerLink="/about"
+      routerLinkActive="active"
+      (click)="closeMenu()"
+    >
       About
     </a>
 
-    <a routerLink="/survey">
+    <a
+      routerLink="/survey"
+      routerLinkActive="active"
+      (click)="closeMenu()"
+    >
       Survey
     </a>
 
-    @if (isAdmin) {
-      <a routerLink="/admin">
-        Admin
-      </a>
-    }
 
-    <!-- Get Help -->
+    <!-- GET HELP -->
     <a
       routerLink="/get-help"
+      routerLinkActive="active"
       class="help-btn"
+      (click)="closeMenu()"
     >
-      🆘 Get Help
+      <span>🆘</span>
+      Get Help
     </a>
 
+
+    <!-- REPORT -->
     <a
       routerLink="/report"
+      routerLinkActive="active"
       class="report-btn"
+      (click)="closeMenu()"
     >
       Report Now
     </a>

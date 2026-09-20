@@ -1,99 +1,205 @@
+/* =========================================
+   ANIMETRIX — GET HELP PAGE
+========================================= */
+
+:host {
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
 .help-page {
   min-height: 100vh;
-  background: #f7faff;
+
+  background: #f7fafc;
+
   color: #102a43;
 }
 
 
-/* =========================
+/* =========================================
    HERO
-========================= */
+========================================= */
 
 .help-hero {
   position: relative;
-  overflow: hidden;
-  padding: 80px 8%;
-  background: linear-gradient(135deg, #eaf4ff, #ffffff);
 
-  display: flex;
+  min-height: 650px;
+
+  padding: 70px 8%;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 0.9fr;
+
   align-items: center;
-  justify-content: space-between;
+
+  gap: 70px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #f5fbff 55%,
+      #eaf6fb 100%
+    );
 }
+
+
+/* Decorative background circles */
+
+.help-hero::before {
+  content: "";
+
+  position: absolute;
+
+  width: 480px;
+  height: 480px;
+
+  left: -260px;
+  bottom: -260px;
+
+  border-radius: 50%;
+
+  background: rgba(14, 165, 233, 0.06);
+}
+
+
+.help-hero::after {
+  content: "";
+
+  position: absolute;
+
+  width: 380px;
+  height: 380px;
+
+  right: -200px;
+  top: -180px;
+
+  border-radius: 50%;
+
+  background: rgba(37, 99, 235, 0.05);
+}
+
+
+/* =========================================
+   HERO CONTENT
+========================================= */
 
 .hero-content {
-  max-width: 850px;
+  position: relative;
+
+  z-index: 3;
+
+  max-width: 700px;
 }
+
 
 .eyebrow,
 .section-label {
   display: inline-block;
 
   font-size: 12px;
-  font-weight: 800;
+
+  font-weight: 900;
+
   letter-spacing: 1.5px;
 
-  color: #2474d2;
+  color: #0879b5;
 
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
+
 
 .help-hero h1 {
-  font-size: clamp(42px, 6vw, 72px);
-  line-height: 1;
+  margin: 0 0 25px;
 
-  margin: 0 0 24px;
+  color: #082f49;
 
-  font-weight: 800;
+  font-size: clamp(52px, 6vw, 76px);
+
+  line-height: 0.98;
+
+  font-weight: 900;
+
+  letter-spacing: -3px;
 }
+
 
 .help-hero h1 span {
-  color: #2474d2;
+  color: #0879b5;
 }
+
 
 .help-hero p {
   max-width: 650px;
 
+  margin: 0;
+
   font-size: 18px;
-  line-height: 1.7;
+
+  line-height: 1.75;
 
   color: #61758a;
 }
 
 
-/* =========================
-   LOCATION
-========================= */
+/* =========================================
+   LOCATION BOX
+========================================= */
 
 .location-box {
   margin-top: 32px;
 
   max-width: 720px;
 
-  background: white;
+  background: #ffffff;
 
-  border: 1px solid #e1eaf3;
+  border: 1px solid #dce9f0;
+
   border-radius: 20px;
 
-  padding: 18px;
+  padding: 17px;
 
   display: flex;
+
   align-items: center;
 
   gap: 16px;
 
   box-shadow:
-    0 12px 35px rgba(31, 75, 115, 0.08);
+    0 15px 40px rgba(31, 75, 115, 0.09);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-.location-icon {
-  width: 50px;
-  height: 50px;
 
-  border-radius: 14px;
+.location-box:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 20px 45px rgba(31, 75, 115, 0.12);
+}
+
+
+.location-icon {
+  width: 52px;
+  height: 52px;
+
+  border-radius: 15px;
 
   background: #fff2e9;
 
   display: grid;
+
   place-items: center;
 
   font-size: 23px;
@@ -101,8 +207,10 @@
   flex-shrink: 0;
 }
 
+
 .location-text {
   display: flex;
+
   flex-direction: column;
 
   gap: 5px;
@@ -110,14 +218,22 @@
   flex: 1;
 }
 
+
 .location-text strong {
+  color: #0b3954;
+
   font-size: 15px;
 }
 
+
 .location-text span {
-  font-size: 13px;
+  font-size: 12px;
+
+  line-height: 1.4;
+
   color: #718096;
 }
+
 
 .location-btn,
 .primary-action,
@@ -128,58 +244,463 @@
 
   text-decoration: none;
 
-  font-weight: 700;
+  font-weight: 800;
 
   border-radius: 12px;
 
   padding: 13px 18px;
 
-  transition: 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
+
 
 .location-btn,
 .primary-action {
-  background: #f47b35;
-  color: white;
+  background: #f97316;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 8px 18px rgba(249, 115, 22, 0.20);
 }
+
 
 .location-btn:hover,
 .primary-action:hover {
   transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 24px rgba(249, 115, 22, 0.28);
 }
+
 
 .location-message {
   margin-top: 12px !important;
 
   font-size: 14px !important;
 
-  color: #2474d2 !important;
+  color: #0879b5 !important;
 }
 
 
-/* HERO PAW */
+/* =========================================
+   HERO RIGHT VISUAL
+========================================= */
 
-.hero-paw {
-  font-size: 150px;
+.help-hero-visual {
+  position: relative;
 
-  opacity: 0.12;
+  min-height: 520px;
 
-  transform: rotate(-15deg);
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  z-index: 2;
 }
 
 
-/* =========================
-   SECTIONS
-========================= */
+/* Decorative circles */
+
+.visual-circle {
+  position: absolute;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+
+.visual-circle-one {
+  width: 420px;
+  height: 420px;
+
+  background: rgba(8, 121, 181, 0.055);
+
+  border: 1px solid rgba(8, 121, 181, 0.08);
+}
+
+
+.visual-circle-two {
+  width: 300px;
+  height: 300px;
+
+  background: rgba(249, 115, 22, 0.045);
+
+  border: 1px solid rgba(249, 115, 22, 0.08);
+}
+
+
+/* =========================================
+   MAIN SUPPORT CARD
+========================================= */
+
+.support-card {
+  position: relative;
+
+  width: min(100%, 430px);
+
+  padding: 30px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border: 1px solid #dceaf1;
+
+  border-radius: 28px;
+
+  box-shadow:
+    0 30px 70px rgba(8, 47, 73, 0.14);
+
+  z-index: 3;
+}
+
+
+.support-card-top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 25px;
+}
+
+
+.support-icon {
+  width: 58px;
+  height: 58px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 17px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #e5f6fc,
+      #f6fcff
+    );
+
+  border: 1px solid #d1eaf3;
+
+  font-size: 27px;
+}
+
+
+.support-status {
+  padding: 8px 12px;
+
+  border-radius: 50px;
+
+  background: #edf8f0;
+
+  color: #277542;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+}
+
+
+.support-card h2 {
+  margin: 0 0 12px;
+
+  color: #0b3954;
+
+  font-size: 29px;
+
+  line-height: 1.12;
+
+  letter-spacing: -1px;
+}
+
+
+.support-card h2 span {
+  color: #0879b5;
+}
+
+
+.support-card > p {
+  margin: 0 0 25px;
+
+  color: #718096;
+
+  font-size: 13px;
+
+  line-height: 1.65;
+}
+
+
+/* =========================================
+   SUPPORT LIST
+========================================= */
+
+.support-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+
+.support-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 13px;
+
+  border-radius: 14px;
+
+  background: #f8fbfd;
+
+  border: 1px solid #e7eff3;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+
+.support-item:hover {
+  transform: translateX(4px);
+
+  background: #ffffff;
+
+  border-color: #c7e1eb;
+}
+
+
+.support-item-icon {
+  width: 39px;
+  height: 39px;
+
+  flex-shrink: 0;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 11px;
+
+  font-size: 18px;
+}
+
+
+.support-item-icon.vet {
+  background: #eaf5ff;
+}
+
+
+.support-item-icon.ngo {
+  background: #eaf9f1;
+}
+
+
+.support-item-icon.location {
+  background: #fff3e9;
+}
+
+
+.support-item > div:nth-child(2) {
+  flex: 1;
+}
+
+
+.support-item strong {
+  display: block;
+
+  color: #0b3954;
+
+  font-size: 12px;
+
+  margin-bottom: 3px;
+}
+
+
+.support-item span {
+  display: block;
+
+  color: #7b8c99;
+
+  font-size: 10px;
+}
+
+
+.support-item b {
+  color: #0879b5;
+
+  font-size: 18px;
+}
+
+
+/* =========================================
+   FLOATING EMERGENCY
+========================================= */
+
+.floating-emergency {
+  position: absolute;
+
+  left: -25px;
+
+  bottom: 45px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 12px 15px;
+
+  background: #ffffff;
+
+  border: 1px solid #f2e1d9;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 15px 35px rgba(8, 47, 73, 0.12);
+
+  z-index: 5;
+
+  animation: floatCard 4s ease-in-out infinite;
+}
+
+
+.emergency-mini-icon {
+  width: 37px;
+  height: 37px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 10px;
+
+  background: #fff1eb;
+
+  font-size: 18px;
+}
+
+
+.floating-emergency strong {
+  display: block;
+
+  color: #0b3954;
+
+  font-size: 11px;
+}
+
+
+.floating-emergency span {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #8796a1;
+
+  font-size: 9px;
+}
+
+
+/* =========================================
+   FLOATING LOCATION
+========================================= */
+
+.floating-location {
+  position: absolute;
+
+  right: -10px;
+
+  top: 65px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 11px 14px;
+
+  background: #082f49;
+
+  border-radius: 13px;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 14px 30px rgba(8, 47, 73, 0.18);
+
+  z-index: 5;
+
+  animation: floatCard 5s ease-in-out infinite reverse;
+}
+
+
+.floating-location > span {
+  font-size: 17px;
+}
+
+
+.floating-location strong {
+  display: block;
+
+  font-size: 11px;
+}
+
+
+.floating-location small {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #a9d9ea;
+
+  font-size: 9px;
+}
+
+
+@keyframes floatCard {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+
+}
+
+
+/* =========================================
+   GENERAL SECTIONS
+========================================= */
 
 .section {
-  padding: 70px 8%;
+  padding: 75px 8%;
 }
+
 
 .section-heading {
   display: flex;
 
   justify-content: space-between;
+
   align-items: flex-end;
 
   gap: 20px;
@@ -187,11 +708,17 @@
   margin-bottom: 30px;
 }
 
+
 .section-heading h2 {
   margin: 0;
 
+  color: #0b3954;
+
   font-size: 34px;
+
+  letter-spacing: -1px;
 }
+
 
 .section-heading p {
   margin: 8px 0 0;
@@ -200,9 +727,9 @@
 }
 
 
-/* =========================
+/* =========================================
    EMERGENCY
-========================= */
+========================================= */
 
 .emergency-card {
   display: flex;
@@ -215,34 +742,52 @@
 
   border-radius: 22px;
 
-  background: #fff7f3;
+  background:
+    linear-gradient(
+      135deg,
+      #fff8f4,
+      #fffdfb
+    );
 
   border: 1px solid #ffe0d2;
+
+  box-shadow:
+    0 10px 30px rgba(120, 70, 40, 0.04);
 }
+
 
 .emergency-icon {
   width: 65px;
   height: 65px;
 
   display: grid;
+
   place-items: center;
 
-  background: white;
+  background: #ffffff;
 
   border-radius: 18px;
 
   font-size: 30px;
 
   flex-shrink: 0;
+
+  box-shadow:
+    0 8px 20px rgba(100, 60, 30, 0.07);
 }
+
 
 .emergency-content {
   flex: 1;
 }
 
+
 .emergency-content h3 {
   margin: 0 0 8px;
+
+  color: #0b3954;
 }
+
 
 .emergency-content p {
   margin: 0;
@@ -251,6 +796,7 @@
 
   color: #68798b;
 }
+
 
 .emergency-badge {
   background: #fff0ea;
@@ -267,9 +813,9 @@
 }
 
 
-/* =========================
+/* =========================================
    EMPTY / LOADING
-========================= */
+========================================= */
 
 .empty-state,
 .loading-state {
@@ -277,16 +823,18 @@
 
   padding: 55px 20px;
 
-  background: white;
+  background: #ffffff;
 
   border: 1px dashed #cbd9e7;
 
   border-radius: 22px;
 }
 
+
 .loading-state {
   border-style: solid;
 }
+
 
 .empty-icon,
 .loading-icon {
@@ -295,10 +843,14 @@
   margin-bottom: 12px;
 }
 
+
 .empty-state h3,
 .loading-state h3 {
   margin: 0 0 8px;
+
+  color: #0b3954;
 }
+
 
 .empty-state p,
 .loading-state p {
@@ -309,19 +861,22 @@
   margin: 0 auto;
 }
 
+
 .secondary-btn {
   margin-top: 18px;
 
   background: #2474d2;
 
-  color: white;
+  color: #ffffff;
 }
+
 
 .retry-btn {
   margin-top: 18px;
+
   margin-left: 8px;
 
-  background: white;
+  background: #ffffff;
 
   color: #2474d2;
 
@@ -337,9 +892,9 @@
 }
 
 
-/* =========================
+/* =========================================
    RESULTS TOP
-========================= */
+========================================= */
 
 .results-top {
   display: flex;
@@ -359,6 +914,7 @@
   border-radius: 16px;
 }
 
+
 .results-top div {
   display: flex;
 
@@ -367,16 +923,18 @@
   gap: 4px;
 }
 
+
 .results-top span {
   font-size: 13px;
 
   color: #718096;
 }
 
+
 .refresh-btn {
   border: 1px solid #2474d2;
 
-  background: white;
+  background: #ffffff;
 
   color: #2474d2;
 
@@ -390,9 +948,9 @@
 }
 
 
-/* =========================
+/* =========================================
    VET CARDS
-========================= */
+========================================= */
 
 .vet-grid {
   display: grid;
@@ -403,8 +961,9 @@
   gap: 22px;
 }
 
+
 .vet-card {
-  background: white;
+  background: #ffffff;
 
   border: 1px solid #e1eaf3;
 
@@ -415,15 +974,19 @@
   box-shadow:
     0 10px 30px rgba(31, 75, 115, 0.05);
 
-  transition: 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
+
 
 .vet-card:hover {
   transform: translateY(-4px);
 
   box-shadow:
-    0 16px 35px rgba(31, 75, 115, 0.1);
+    0 16px 35px rgba(31, 75, 115, 0.10);
 }
+
 
 .vet-top {
   display: flex;
@@ -435,11 +998,13 @@
   margin-bottom: 18px;
 }
 
+
 .vet-icon {
   width: 52px;
   height: 52px;
 
   display: grid;
+
   place-items: center;
 
   background: #eef6ff;
@@ -448,6 +1013,7 @@
 
   font-size: 25px;
 }
+
 
 .distance-badge {
   background: #edf8f0;
@@ -463,6 +1029,7 @@
   font-weight: 800;
 }
 
+
 .card-type {
   font-size: 11px;
 
@@ -473,11 +1040,15 @@
   color: #2474d2;
 }
 
+
 .vet-card h3 {
   margin: 8px 0 10px;
 
   font-size: 21px;
+
+  color: #0b3954;
 }
+
 
 .vet-address {
   color: #718096;
@@ -486,6 +1057,7 @@
 
   min-height: 50px;
 }
+
 
 .vet-actions,
 .ngo-actions {
@@ -498,6 +1070,7 @@
   margin-top: 18px;
 }
 
+
 .call-btn,
 .direction-btn {
   border-radius: 10px;
@@ -508,8 +1081,10 @@
 
   cursor: pointer;
 
-  transition: 0.2s ease;
+  transition:
+    transform 0.2s ease;
 }
+
 
 .call-btn {
   background: #edf8f0;
@@ -519,13 +1094,15 @@
   border: 1px solid #ccebd3;
 }
 
+
 .direction-btn {
   background: #2474d2;
 
-  color: white;
+  color: #ffffff;
 
   border: 1px solid #2474d2;
 }
+
 
 .call-btn:hover,
 .direction-btn:hover {
@@ -533,14 +1110,16 @@
 }
 
 
-/* MAP SEARCH */
+/* =========================================
+   MAP SEARCH
+========================================= */
 
 .map-search-box {
   margin-top: 24px;
 
   padding: 22px;
 
-  background: white;
+  background: #ffffff;
 
   border: 1px solid #e1eaf3;
 
@@ -555,11 +1134,13 @@
   gap: 20px;
 }
 
+
 .map-search-box p {
   margin: 5px 0 0;
 
   color: #718096;
 }
+
 
 .outline-btn {
   background: transparent;
@@ -578,13 +1159,14 @@
 }
 
 
-/* =========================
+/* =========================================
    NGO
-========================= */
+========================================= */
 
 .ngo-section {
   background: #ffffff;
 }
+
 
 .ngo-grid {
   display: grid;
@@ -595,8 +1177,14 @@
   gap: 22px;
 }
 
+
 .ngo-card {
-  background: #f9fbfe;
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f9fbfe
+    );
 
   border: 1px solid #e1eaf3;
 
@@ -604,8 +1192,11 @@
 
   padding: 26px;
 
-  transition: 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
+
 
 .ngo-card:hover {
   transform: translateY(-4px);
@@ -613,6 +1204,7 @@
   box-shadow:
     0 16px 35px rgba(31, 75, 115, 0.08);
 }
+
 
 .ngo-header {
   display: flex;
@@ -626,11 +1218,13 @@
   margin-bottom: 18px;
 }
 
+
 .ngo-icon {
   width: 55px;
   height: 55px;
 
   display: grid;
+
   place-items: center;
 
   background: #fff2e9;
@@ -639,6 +1233,7 @@
 
   font-size: 28px;
 }
+
 
 .verified-badge {
   background: #edf8f0;
@@ -654,17 +1249,22 @@
   font-weight: 800;
 }
 
+
 .ngo-card h3 {
   margin: 8px 0 10px;
 
   font-size: 22px;
+
+  color: #0b3954;
 }
+
 
 .ngo-card p {
   color: #718096;
 
   line-height: 1.65;
 }
+
 
 .ngo-location {
   margin-top: 14px;
@@ -677,7 +1277,9 @@
 }
 
 
-/* OFFICIAL DIRECTORY */
+/* =========================================
+   OFFICIAL DIRECTORY
+========================================= */
 
 .official-directory {
   margin-top: 30px;
@@ -695,17 +1297,21 @@
   gap: 18px;
 }
 
+
 .directory-icon {
   font-size: 32px;
 }
+
 
 .official-directory > div:nth-child(2) {
   flex: 1;
 }
 
+
 .official-directory h3 {
   margin: 0 0 6px;
 }
+
 
 .official-directory p {
   margin: 0;
@@ -716,9 +1322,9 @@
 }
 
 
-/* =========================
-   INFO
-========================= */
+/* =========================================
+   RESPONSIBLE HELP
+========================================= */
 
 .help-info {
   margin: 0 8% 60px;
@@ -736,13 +1342,18 @@
   gap: 18px;
 }
 
+
 .info-icon {
   font-size: 30px;
 }
 
+
 .help-info h3 {
   margin: 0 0 6px;
+
+  color: #0b3954;
 }
+
 
 .help-info p {
   margin: 0;
@@ -753,11 +1364,90 @@
 }
 
 
-/* =========================
-   RESPONSIVE
-========================= */
+/* =========================================
+   TABLET
+========================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 1050px) {
+
+  .help-hero {
+    grid-template-columns: 1fr 0.85fr;
+
+    gap: 40px;
+
+    padding-left: 6%;
+    padding-right: 6%;
+  }
+
+
+  .support-card {
+    padding: 25px;
+  }
+
+
+  .floating-emergency {
+    left: -10px;
+  }
+
+
+  .floating-location {
+    right: -5px;
+  }
+
+}
+
+
+/* =========================================
+   TABLET / SMALL LAPTOP
+========================================= */
+
+@media (max-width: 850px) {
+
+  .help-hero {
+    grid-template-columns: 1fr;
+
+    padding-top: 65px;
+
+    padding-bottom: 75px;
+
+    gap: 45px;
+  }
+
+
+  .hero-content {
+    max-width: 720px;
+
+    text-align: center;
+
+    margin: 0 auto;
+  }
+
+
+  .help-hero p {
+    margin-left: auto;
+
+    margin-right: auto;
+  }
+
+
+  .location-box {
+    margin-left: auto;
+
+    margin-right: auto;
+
+    text-align: left;
+  }
+
+
+  .help-hero-visual {
+    min-height: 500px;
+  }
+
+
+  .support-card {
+    width: min(100%, 480px);
+  }
+
 
   .vet-grid,
   .ngo-grid {
@@ -767,29 +1457,82 @@
 }
 
 
-@media (max-width: 800px) {
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 650px) {
 
   .help-hero {
-    padding: 55px 6%;
+    padding: 55px 5% 65px;
   }
 
-  .hero-paw {
-    display: none;
+
+  .help-hero h1 {
+    font-size: 48px;
+
+    letter-spacing: -2px;
   }
+
+
+  .help-hero p {
+    font-size: 16px;
+  }
+
 
   .location-box {
     flex-direction: column;
 
     align-items: stretch;
+
+    padding: 16px;
   }
+
 
   .location-btn {
     width: 100%;
   }
 
-  .section {
-    padding: 50px 6%;
+
+  .help-hero-visual {
+    min-height: 450px;
   }
+
+
+  .support-card {
+    padding: 23px;
+
+    border-radius: 23px;
+  }
+
+
+  .support-card h2 {
+    font-size: 25px;
+  }
+
+
+  .floating-emergency {
+    left: -5px;
+
+    bottom: 25px;
+
+    transform: scale(0.9);
+  }
+
+
+  .floating-location {
+    right: -5px;
+
+    top: 30px;
+
+    transform: scale(0.9);
+  }
+
+
+  .section {
+    padding: 55px 5%;
+  }
+
 
   .section-heading {
     align-items: flex-start;
@@ -797,11 +1540,18 @@
     flex-direction: column;
   }
 
+
+  .section-heading h2 {
+    font-size: 29px;
+  }
+
+
   .emergency-card {
     flex-direction: column;
 
     align-items: flex-start;
   }
+
 
   .results-top,
   .map-search-box,
@@ -811,32 +1561,84 @@
     align-items: flex-start;
   }
 
+
   .refresh-btn,
   .official-directory .primary-action {
     width: 100%;
   }
 
+
+  .help-info {
+    margin-left: 5%;
+
+    margin-right: 5%;
+
+    margin-bottom: 40px;
+  }
+
 }
 
 
-@media (max-width: 500px) {
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 430px) {
 
   .help-hero h1 {
-    font-size: 45px;
+    font-size: 43px;
   }
 
-  .section-heading h2 {
-    font-size: 28px;
+
+  .help-hero-visual {
+    min-height: 430px;
   }
 
-  .vet-card,
-  .ngo-card {
+
+  .support-card {
     padding: 20px;
   }
 
-  .vet-actions button,
-  .ngo-actions button {
-    flex: 1;
+
+  .support-icon {
+    width: 50px;
+
+    height: 50px;
+  }
+
+
+  .support-status {
+    font-size: 8px;
+  }
+
+
+  .support-card h2 {
+    font-size: 23px;
+  }
+
+
+  .support-card > p {
+    font-size: 12px;
+  }
+
+
+  .floating-emergency {
+    left: -8px;
+
+    bottom: 15px;
+  }
+
+
+  .floating-location {
+    right: -8px;
+
+    top: 20px;
+  }
+
+
+  .floating-emergency,
+  .floating-location {
+    transform: scale(0.82);
   }
 
 }

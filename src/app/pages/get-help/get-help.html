@@ -1,6 +1,9 @@
 <div class="help-page">
 
-  <!-- HERO -->
+  <!-- =========================================
+       HERO
+  ========================================== -->
+
   <section class="help-hero">
 
     <div class="hero-content">
@@ -10,8 +13,9 @@
       </span>
 
       <h1>
-        Find Help<br>
-        <span>Near You</span>
+        Find Help
+        <br>
+        <span>Near You.</span>
       </h1>
 
       <p>
@@ -21,6 +25,7 @@
 
 
       <!-- LOCATION BOX -->
+
       <div class="location-box">
 
         <div class="location-icon">
@@ -62,14 +67,167 @@
     </div>
 
 
-    <div class="hero-paw">
-      🐾
+    <!-- =========================================
+         HERO VISUAL
+    ========================================== -->
+
+    <div class="help-hero-visual">
+
+      <div class="visual-circle visual-circle-one"></div>
+
+      <div class="visual-circle visual-circle-two"></div>
+
+
+      <!-- Main support card -->
+
+      <div class="support-card">
+
+        <div class="support-card-top">
+
+          <div class="support-icon">
+            🐾
+          </div>
+
+          <span class="support-status">
+            SUPPORT NETWORK
+          </span>
+
+        </div>
+
+
+        <h2>
+          Help for animals,
+          <span>closer to you.</span>
+        </h2>
+
+
+        <p>
+          Discover nearby veterinary services
+          and animal-welfare support using your
+          location.
+        </p>
+
+
+        <div class="support-list">
+
+          <div class="support-item">
+
+            <div class="support-item-icon vet">
+              🏥
+            </div>
+
+            <div>
+              <strong>
+                Veterinary Care
+              </strong>
+
+              <span>
+                Find nearby clinics
+              </span>
+            </div>
+
+            <b>→</b>
+
+          </div>
+
+
+          <div class="support-item">
+
+            <div class="support-item-icon ngo">
+              🤝
+            </div>
+
+            <div>
+              <strong>
+                Animal Welfare
+              </strong>
+
+              <span>
+                Explore support organisations
+              </span>
+            </div>
+
+            <b>→</b>
+
+          </div>
+
+
+          <div class="support-item">
+
+            <div class="support-item-icon location">
+              📍
+            </div>
+
+            <div>
+              <strong>
+                Location Based
+              </strong>
+
+              <span>
+                Search around your area
+              </span>
+            </div>
+
+            <b>→</b>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- Floating emergency badge -->
+
+      <div class="floating-emergency">
+
+        <div class="emergency-mini-icon">
+          🚨
+        </div>
+
+        <div>
+          <strong>
+            Need urgent help?
+          </strong>
+
+          <span>
+            Find veterinary care
+          </span>
+        </div>
+
+      </div>
+
+
+      <!-- Small location badge -->
+
+      <div class="floating-location">
+
+        <span>
+          📍
+        </span>
+
+        <div>
+          <strong>
+            Near You
+          </strong>
+
+          <small>
+            Location based
+          </small>
+        </div>
+
+      </div>
+
     </div>
 
   </section>
 
 
-  <!-- EMERGENCY -->
+
+  <!-- =========================================
+       EMERGENCY
+  ========================================== -->
+
   <section class="section">
 
     <div class="section-heading">
@@ -132,7 +290,11 @@
   </section>
 
 
-  <!-- VETERINARY -->
+
+  <!-- =========================================
+       VETERINARY
+  ========================================== -->
+
   <section
     class="section"
     id="vets"
@@ -161,6 +323,7 @@
 
 
     <!-- BEFORE LOCATION -->
+
     @if (!locationSelected) {
 
       <div class="empty-state">
@@ -192,6 +355,7 @@
 
 
     <!-- LOADING -->
+
     @if (
       locationSelected &&
       isLoadingVets
@@ -218,6 +382,7 @@
 
 
     <!-- ERROR / NO RESULTS -->
+
     @if (
       locationSelected &&
       !isLoadingVets &&
@@ -260,6 +425,7 @@
 
 
     <!-- RESULTS -->
+
     @if (
       locationSelected &&
       !isLoadingVets &&
@@ -279,6 +445,7 @@
           </span>
 
         </div>
+
 
         <button
           type="button"
@@ -307,10 +474,13 @@
               </div>
 
               <span class="distance-badge">
-                {{ vet.distance < 1
-                  ? (vet.distance * 1000 | number:'1.0-0') + ' m'
-                  : (vet.distance | number:'1.1-1') + ' km'
+
+                {{
+                  vet.distance < 1
+                    ? (vet.distance * 1000 | number:'1.0-0') + ' m'
+                    : (vet.distance | number:'1.1-1') + ' km'
                 }}
+
               </span>
 
             </div>
@@ -320,9 +490,11 @@
               {{ vet.type }}
             </span>
 
+
             <h3>
               {{ vet.name }}
             </h3>
+
 
             <p class="vet-address">
               📍 {{ vet.address }}
@@ -336,12 +508,13 @@
                 <button
                   type="button"
                   class="call-btn"
-                  (click)="callNumber(vet.phone!)"
+                  (click)="callNumber(vet.phone)"
                 >
                   📞 Call
                 </button>
 
               }
+
 
               <button
                 type="button"
@@ -378,6 +551,7 @@
 
         </div>
 
+
         <button
           type="button"
           class="outline-btn"
@@ -393,7 +567,11 @@
   </section>
 
 
-  <!-- NGOS -->
+
+  <!-- =========================================
+       NGO SECTION
+  ========================================== -->
+
   <section class="section ngo-section">
 
     <div class="section-heading">
@@ -444,9 +622,11 @@
             ANIMAL WELFARE
           </span>
 
+
           <h3>
             {{ ngo.name }}
           </h3>
+
 
           <p>
             {{ ngo.description }}
@@ -465,12 +645,13 @@
               <button
                 type="button"
                 class="call-btn"
-                (click)="callNumber(ngo.phone!)"
+                (click)="callNumber(ngo.phone)"
               >
                 📞 Contact
               </button>
 
             }
+
 
             <button
               type="button"
@@ -489,11 +670,14 @@
     </div>
 
 
+    <!-- OFFICIAL DIRECTORY -->
+
     <div class="official-directory">
 
       <div class="directory-icon">
         🏛️
       </div>
+
 
       <div>
 
@@ -510,6 +694,7 @@
 
       </div>
 
+
       <button
         type="button"
         class="primary-action"
@@ -525,7 +710,11 @@
   </section>
 
 
-  <!-- RESPONSIBLE HELP -->
+
+  <!-- =========================================
+       RESPONSIBLE HELP
+  ========================================== -->
+
   <section class="help-info">
 
     <div class="info-icon">
