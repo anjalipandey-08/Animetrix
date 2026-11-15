@@ -1,59 +1,122 @@
-# Animetrixx
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.2.
+# 🐾 Animetrix – Technology for Every Paw
 
-## Development server
+### A Technology-Driven Initiative for Urban Animal Welfare
 
-To start a local development server, run:
+<p align="center">
+  <strong>Building awareness. Encouraging community participation. Supporting urban animal welfare.</strong>
+</p>
+
+---
+
+## 🌍 About the Project
+
+**Animetrix** is an academic web development project designed to address challenges related to urban animals through technology, community participation and data-driven insights.
+
+The platform focuses on urban animal observations, available infrastructure, community reporting and awareness.
+
+Its purpose is to create a digital space where people can explore animal-related concerns, share observations and understand the facilities and challenges affecting animals in urban environments.
+
+## 🎯 Project Objectives
+
+- Encourage awareness of urban animal-related issues.
+- Provide a platform for recording animal observations.
+- Collect community responses through surveys.
+- Highlight available animal-related infrastructure and facilities.
+- Present insights that can help people understand local challenges.
+- Promote community participation and responsible awareness.
+
+## ✨ Key Sections
+
+The Animetrix platform includes the following sections:
+
+- **Home:** Introduction to the Animetrix initiative.
+- **Explore:** Explore urban animal-related information.
+- **Report:** Submit observations and information about animal-related concerns.
+- **Survey:** Collect community feedback and responses.
+- **Community:** Encourage community participation.
+- **Insights:** Present information and observations in an organised manner.
+- **About:** Learn about the project and its objectives.
+- **Admin:** Administrative section of the application.
+
+## 🛠️ Technologies Used
+
+| Technology | Purpose |
+|---|---|
+| Angular | Frontend application development |
+| TypeScript | Application programming |
+| HTML5 | Web page structure |
+| CSS3 | Styling and layouts |
+| Supabase | Backend and data services |
+| Git & GitHub | Version control and project hosting |
+
+## 📸 Project Screenshots
+
+Screenshots of the application will be added here to demonstrate its interface and functionality.
+
+## 🌐 Live Project
+
+**Explore Animetrix:**
+
+https://animetrix08.netlify.app/
+
+## 📂 Source Code
+
+**GitHub Repository:**
+
+https://github.com/anjalipandey-08/Animetrix
+
+## 💻 Run the Project Locally
+
+Follow these steps to run the project on your computer.
+
+**1. Clone the repository**
+
+```bash
+git clone https://github.com/anjalipandey-08/Animetrix.git
+```
+
+**2. Navigate to the project folder**
+
+```bash
+cd Animetrix
+```
+
+**3. Install dependencies**
+
+```bash
+npm install
+```
+
+**4. Start the development server**
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+**5. Open your browser**
 
-## Code scaffolding
+Navigate to:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```text
+http://localhost:4200/
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 👥 Project Team
 
-```bash
-ng generate --help
-```
+- Anjali Pandey
+- Shubham
 
-## Building
+## 🎓 Academic Project
 
-To build the project run:
+Developed as part of an undergraduate Information Technology field project.
 
-```bash
-ng build
-```
+**Project Name:** Animetrix – Technology for Every Paw
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+<p align="center">
+  <strong>Technology for Every Paw 🐾</strong>
+  <br>
+  <em>Creating awareness through technology and community participation.</em>
+</p>
