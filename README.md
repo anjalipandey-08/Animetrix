@@ -85,6 +85,17 @@ My work included:
 ### Home Page – How It Works
 
 ![Animetrix How It Works](screenshots/home-process.png)
+### Explore Page – Main Section
+
+![Animetrix Explore Main](screenshots/explore-main.png)
+
+### Explore Page – Animal Categories
+
+![Animetrix Explore Categories](screenshots/explore-categories.png)
+
+### Explore Page – Animal Listings
+
+![Animetrix Explore Listings](screenshots/explore-listings.png)
 
 ## 🌐 Live Project
 
