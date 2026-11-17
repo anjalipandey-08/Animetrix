@@ -120,6 +120,19 @@ My work included:
 ### Our Approach
 
 ![Animetrix Insights Approach](screenshots/insights-approach.png)
+## Community Page
+
+### Community Hero
+
+![Animetrix Community Hero](screenshots/community-hero.png)
+
+### Community Participation
+
+![Animetrix Community Participation](screenshots/community-participation.png)
+
+### Community Impact
+
+![Animetrix Community Impact](screenshots/community-impact.png)
 ## 🌐 Live Project
 
 Explore the deployed application:
