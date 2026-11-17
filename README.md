@@ -82,6 +82,9 @@ My work included:
 ### Home Page – Features Section
 
 ![Animetrix Home Features](screenshots/home-features.png)
+### Home Page – How It Works
+
+![Animetrix How It Works](screenshots/home-process.png)
 
 ## 🌐 Live Project
 
