@@ -16,6 +16,15 @@ The platform focuses on urban animal observations, available infrastructure, com
 
 Its purpose is to create a digital space where people can explore animal-related concerns, share observations and understand the facilities and challenges affecting animals in urban environments.
 
+## ⭐ Project Highlights
+
+- Developed an Angular-based web application focused on urban animal welfare.
+- Created dedicated sections for exploring animal-related information and reporting observations.
+- Designed a community-driven platform to encourage awareness and participation.
+- Conducted survey-based research to understand community perspectives.
+- Worked with Supabase for backend and data services.
+- Organised project information through dedicated insights and infrastructure sections.
+
 ## 🎯 Problem Statement
 
 Urban animals face several challenges, including limited access to basic facilities, infrastructure-related difficulties and a lack of organised community awareness.
