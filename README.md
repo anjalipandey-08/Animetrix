@@ -76,7 +76,9 @@ My work included:
 
 ## 📸 Project Screenshots
 
-Screenshots showcasing the website interface and its features will be added here.
+### Home Page – Hero Section
+
+![Animetrix Home Page](home-hero.png)
 
 ## 🌐 Live Project
 
