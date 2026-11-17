@@ -1,4 +1,3 @@
-
 # 🐾 Animetrix – Technology for Every Paw
 
 ### A Technology-Driven Initiative for Urban Animal Welfare
@@ -17,27 +16,35 @@ The platform focuses on urban animal observations, available infrastructure, com
 
 Its purpose is to create a digital space where people can explore animal-related concerns, share observations and understand the facilities and challenges affecting animals in urban environments.
 
+## 🎯 Problem Statement
+
+Urban animals face several challenges, including limited access to basic facilities, infrastructure-related difficulties and a lack of organised community awareness.
+
+Information about these challenges is often scattered.
+
+Animetrix aims to bring relevant information, community observations and awareness together through a technology-driven platform.
+
 ## 🎯 Project Objectives
 
 - Encourage awareness of urban animal-related issues.
 - Provide a platform for recording animal observations.
 - Collect community responses through surveys.
 - Highlight available animal-related infrastructure and facilities.
-- Present insights that can help people understand local challenges.
+- Present organised information and insights about local challenges.
 - Promote community participation and responsible awareness.
 
-## ✨ Key Sections
+## ✨ Key Features and Sections
 
-The Animetrix platform includes the following sections:
-
-- **Home:** Introduction to the Animetrix initiative.
-- **Explore:** Explore urban animal-related information.
-- **Report:** Submit observations and information about animal-related concerns.
-- **Survey:** Collect community feedback and responses.
-- **Community:** Encourage community participation.
-- **Insights:** Present information and observations in an organised manner.
-- **About:** Learn about the project and its objectives.
-- **Admin:** Administrative section of the application.
+| Section | Description |
+|---|---|
+| Home | Introduction to the Animetrix initiative. |
+| Explore | Explore urban animal-related information. |
+| Report | Submit observations and information about animal-related concerns. |
+| Survey | Provide community feedback and responses. |
+| Community | Encourage community participation. |
+| Insights | Present information and observations in an organised manner. |
+| About | Learn about the project and its objectives. |
+| Admin | Administrative section of the application. |
 
 ## 🛠️ Technologies Used
 
@@ -48,53 +55,75 @@ The Animetrix platform includes the following sections:
 | HTML5 | Web page structure |
 | CSS3 | Styling and layouts |
 | Supabase | Backend and data services |
-| Git & GitHub | Version control and project hosting |
+| Git | Version control |
+| GitHub | Source code hosting |
+
+## 👩‍💻 My Role and Contributions
+
+**Developer: Anjali Pandey**
+
+I independently handled the website's development and implementation as part of the academic group project.
+
+My work included:
+
+- Developing and implementing the Angular-based website.
+- Organising website sections and application features.
+- Working on the user interface and styling.
+- Working with Supabase for backend and data services.
+- Contributing to project research and documentation.
+- Working on survey-related activities and community insights.
+- Preparing project-related documentation and presentation.
 
 ## 📸 Project Screenshots
 
-Screenshots of the application will be added here to demonstrate its interface and functionality.
+Screenshots showcasing the website interface and its features will be added here.
 
 ## 🌐 Live Project
 
-**Explore Animetrix:**
+Explore the deployed application:
 
-https://animetrix08.netlify.app/
+**[Animetrix – Live Website](https://animetrix08.netlify.app/)**
 
 ## 📂 Source Code
 
-**GitHub Repository:**
+Access the complete project repository:
 
-https://github.com/anjalipandey-08/Animetrix
+**[Animetrix – GitHub Repository](https://github.com/anjalipandey-08/Animetrix)**
 
 ## 💻 Run the Project Locally
 
-Follow these steps to run the project on your computer.
+Follow these steps to run Animetrix on your local computer.
 
-**1. Clone the repository**
+### Prerequisites
+
+- Node.js and npm
+- Git
+
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/anjalipandey-08/Animetrix.git
 ```
 
-**2. Navigate to the project folder**
+### 2. Navigate to the project folder
 
 ```bash
 cd Animetrix
 ```
 
-**3. Install dependencies**
+### 3. Install dependencies
 
 ```bash
 npm install
 ```
 
-**4. Start the development server**
+### 4. Start the development server
 
 ```bash
-ng serve
+npx ng serve
 ```
 
-**5. Open your browser**
+### 5. Open the application
 
 Navigate to:
 
@@ -102,16 +131,37 @@ Navigate to:
 http://localhost:4200/
 ```
 
-## 👥 Project Team
+The application will automatically reload when you modify the source files.
 
-- Anjali Pandey
-- Shubham
+## 🏗️ Build the Project
 
-## 🎓 Academic Project
+To create a production build, run:
 
-Developed as part of an undergraduate Information Technology field project.
+```bash
+npx ng build
+```
+
+The generated build files will be stored in the `dist/` directory.
+
+## 🧪 Running Tests
+
+To execute the project's unit tests, run:
+
+```bash
+npx ng test
+```
+
+## 👥 Academic Project Details
 
 **Project Name:** Animetrix – Technology for Every Paw
+
+**Project Developer:** Anjali Pandey
+
+**Academic Group Member:** Shubham
+
+**Course:** Undergraduate Information Technology
+
+**Project Type:** Academic Field Project
 
 ---
 
