@@ -78,7 +78,7 @@ My work included:
 
 ### Home Page – Hero Section
 
-![Animetrix Home Page](home-hero.png)
+![Animetrix Home Page](screenshots/home-hero.png)
 
 ## 🌐 Live Project
 
