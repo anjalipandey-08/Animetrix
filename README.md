@@ -96,6 +96,21 @@ My work included:
 ### Explore Page – Animal Listings
 
 ![Animetrix Explore Listings](screenshots/explore-listings.png)
+### Report Page – Introduction
+
+![Animetrix Report Main](screenshots/report-main.png)
+
+### Report Page – Reporter & Animal Details
+
+![Animetrix Reporter and Animal Details](screenshots/report-animal-details.png)
+
+### Report Page – Location & Observation Details
+
+![Animetrix Location and Observation](screenshots/report-location-observation.png)
+
+### Report Page – Infrastructure & Evidence
+
+![Animetrix Infrastructure and Evidence](screenshots/report-infrastructure-evidence.png)
 
 ## 🌐 Live Project
 
