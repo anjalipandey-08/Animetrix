@@ -111,7 +111,15 @@ My work included:
 ### Report Page – Infrastructure & Evidence
 
 ![Animetrix Infrastructure and Evidence](screenshots/report-infrastructure-evidence.png)
+## Insights Page
 
+### Insights Overview
+
+![Animetrix Insights Overview](screenshots/insights-overview.png)
+
+### Our Approach
+
+![Animetrix Insights Approach](screenshots/insights-approach.png)
 ## 🌐 Live Project
 
 Explore the deployed application:
